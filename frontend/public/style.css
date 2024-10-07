@@ -1,0 +1,144 @@
+
+
+.nav-item {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.fs-4 {
+  color: rgb(9, 6, 1);
+}
+
+.position-absolute {
+  color: red;
+}
+
+.img-wrapper {
+  height: 550px; /* Đặt chiều cao cố định cho tất cả ảnh */
+  overflow: hidden;
+}
+
+.img-wrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Đảm bảo ảnh giữ tỷ lệ nhưng bao phủ toàn bộ vùng chứa */
+}
+
+.display-4 {
+  color: rgb(212, 7, 144); /* Màu giống ảnh */
+  text-align: center;
+  font-family: 'Pacifico', cursive; /* Thử Pacifico trước */
+  font-size: 3rem; /* Kích thước tương tự */
+}
+
+/* Style for categories section */
+#categories {
+  background-color: #f9f9f9;
+}
+
+.categories-item {
+  display: block;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: #000; /* Màu chữ */
+  background-color: #fff; /* Màu nền */
+  border: 2px solid #eaeaea; /* Đường viền xung quanh */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  border-radius: 8px; /* Bo tròn các góc, nếu muốn có hiệu ứng bo góc */
+  transition: all 0.3s ease; /* Hiệu ứng chuyển động khi hover */
+}
+
+/* Style when hovering on categories item */
+.categories-item:hover {
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2); /* Tăng độ mạnh của bóng khi hover */
+  transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
+}
+
+/* Heading of each category */
+.categories-item h3 {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #d40790; /* Màu chữ giống trong banner */
+}
+
+.title {
+  text-decoration: none;
+}
+
+.btn-cart {
+  text-decoration: none;
+}
+
+/* Chỉnh tiêu đề (tên sản phẩm) thành màu đen và bỏ gạch dưới */
+#clothing .title h3 {
+  color: #000; /* Màu đen cho tên sản phẩm */
+  font-weight: normal; /* Không in đậm */
+  text-decoration: none; /* Bỏ gạch dưới */
+}
+
+.secondary-font {
+  color: rgb(237, 66, 66);
+}
+
+/* Chỉnh icon ngôi sao thưa ra và có màu vàng */
+#clothing .rating iconify-icon {
+  color: #FFD700; /* Màu vàng cho ngôi sao */
+  margin-right: 5px; /* Khoảng cách giữa các ngôi sao */
+  font-size: 1.2rem; /* Bạn có thể điều chỉnh kích thước của ngôi sao */
+}
+
+.rating {
+  display: flex; /* Sử dụng flex để sắp xếp ngôi sao và số 5 */
+  align-items: center; /* Căn giữa ngôi sao và số 5 */
+}
+
+.rating iconify-icon {
+  font-size: 0.8rem; /* Kích thước nhỏ hơn cho ngôi sao */
+  color: gold; /* Màu vàng cho ngôi sao */
+}
+
+.rating-number {
+  color: black; /* Màu đen cho số 5 */
+  font-size: 1.2rem; /* Kích thước lớn hơn cho số 5 */
+  margin-left: 5px; /* Khoảng cách giữa ngôi sao và số 5 */
+}
+
+.btn-cart {
+  color: rgb(20, 1, 1); /* Màu chữ trong nút cart là trắng */
+  border: 1px solid rgb(66, 43, 46); /* Đường viền 2px màu hồng */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+  padding: 10px 20px; /* Thêm padding cho nút */
+  border-radius: 5px; /* Thêm bo góc nhẹ cho nút */
+}
+
+.btn-cart:hover {
+  background-color: pink; /* Đổi màu nền thành hồng khi rê chuột vào */
+  color: black; /* Đổi màu chữ thành đen */
+  transform: scale(1.1); /* Tăng kích thước nhẹ nhàng khi rê chuột vào */
+}
+
+.btn-wishlist {
+  color: black; /* Màu của icon trái tim là đen */
+  transition: color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+  font-size: 24px; /* Kích thước icon trái tim */
+  border: 1px solid rgb(66, 43, 46); /* Đường viền 2px màu hồng */
+  border-radius: 5px; /* Thêm bo góc nhẹ cho nút */
+}
+
+.btn-wishlist:hover {
+  color: rgb(172, 8, 35); /* Đổi màu trái tim thành hồng khi rê chuột vào */
+  transform: scale(1.1); /* Tăng kích thước nhẹ nhàng khi rê chuột vào */
+  background-color: pink; /* Đổi màu nền thành hồng khi rê chuột vào */
+}
+
+.blog-read {
+  text-decoration: none;
+  color: #000;
+}
+
+.secondary-font1 {
+  color: #000;
+  text-align: center;
+  font-weight: 500;
+}
