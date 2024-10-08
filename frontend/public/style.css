@@ -142,3 +142,60 @@
   text-align: center;
   font-weight: 500;
 }
+
+#footer {
+  background-color: #f75870; /* Màu hồng nhạt */
+  color: #333; /* Màu chữ */
+}
+
+#footer h3 {
+  color: #fff; /* Màu chữ cho tiêu đề */
+}
+
+.footer-menu p {
+  color: #fff; /* Màu chữ cho các đoạn văn */
+}
+
+.footer-menu .nav-link {
+  color: #fff; /* Màu chữ cho liên kết */
+  transition: color 0.3s; /* Hiệu ứng chuyển đổi màu */
+}
+
+.footer-menu .nav-link:hover {
+  color: #f5415f; /* Màu chữ khi hover */
+}
+
+#footer-bottom {
+  background-color:#f75870; /* Màu hồng đậm cho footer bottom */
+  color: #fff; /* Màu chữ cho footer bottom */
+}
+
+#footer-bottom hr {
+  border-color: #fff; /* Màu đường kẻ cho ngăn cách */
+}
+
+#footer-bottom .copyright {
+  text-align: center; /* Căn giữa cho văn bản bản quyền */
+}
+
+.social-icon {
+  color: #fff; /* Màu chữ cho các biểu tượng xã hội */
+}
+
+.social-icon:hover {
+  color: #f53e5d; /* Màu khi hover trên biểu tượng xã hội */
+}
+
+.search-bar {
+  background-color: #ffffff; /* Màu nền cho ô nhập email */
+}
+
+.search-bar input {
+  border: none; /* Ẩn viền cho ô nhập */
+}
+
+.send-icon {
+  color: #ff6f61; /* Màu cho biểu tượng gửi */
+  cursor: pointer; /* Thay đổi con trỏ khi hover */
+}
+

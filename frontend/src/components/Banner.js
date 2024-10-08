@@ -110,7 +110,7 @@ const instagramImages = [
         </div>
       </section>
 
-      <section id="clothing" className="my-5">
+      <section id="clothing">
   <div className="container my-5 py-5">
     <div className="section-header d-md-flex justify-content-between align-items-center">
       <h2 className="display-4 fw-normal">Thời Trang Thú Cưng</h2>
@@ -161,8 +161,8 @@ const instagramImages = [
   </div>
 </section>
 
-<section id="clothing" className="my-5">
-  <div className="container my-5 py-5">
+<section id="clothing">
+  <div className="container">
     <div className="section-header d-md-flex justify-content-between align-items-center">
       <h2 className="display-4 fw-normal">Thức ăn Thú Cưng</h2>
     </div>
@@ -232,8 +232,8 @@ const instagramImages = [
         </div>
       </section>
 
-<section id="latest-blog" className="my-5">
-            <div className="container py-5 my-5">
+<section id="latest-blog">
+            <div className="container">
                 <div className="row mt-5">
                     <div className="section-header d-md-flex justify-content-between align-items-center mb-3">
                         <h2 className="display-4 fw-normal">Bài Đăng Trên Blog Mới Nhất</h2>
@@ -268,7 +268,7 @@ const instagramImages = [
             </div>
         </section>
 
-         <section id="insta" className="my-5">
+         <section id="insta">
             <div className="row g-0 py-5">
                 {instagramImages.map((image, index) => (
                     <div className="col instagram-item text-center position-relative" key={index}>

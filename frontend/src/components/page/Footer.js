@@ -106,9 +106,8 @@ function Footer() {
               </div>
             </div>
           </div>
-        </footer>
-  
-        <div id="footer-bottom">
+
+          <div id="footer-bottom">
           <div className="container">
             <hr className="m-0" />
             <div className="row mt-3">
@@ -118,6 +117,9 @@ function Footer() {
             </div>
           </div>
         </div>
+        </footer>
+  
+      
       </>
     );
   }

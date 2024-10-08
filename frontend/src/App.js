@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.scss';
-import Header from './components/Header';
+import './CSS/Product.css';
+import Header from './components/page/Header';
 import Banner from './components/Banner';
-import Footer from './components/Footer';
+import Footer from './components/page/Footer';
 import About from './components/About_us';
 import Product from './components/Product';
 
