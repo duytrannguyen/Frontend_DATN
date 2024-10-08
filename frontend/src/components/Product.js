@@ -2,7 +2,6 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Pagination from 'react-bootstrap/Pagination';
-
 const Product = () => {
 
   const products = [

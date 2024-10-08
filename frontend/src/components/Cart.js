@@ -1,7 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from "react";
-import '../css/cart.css';
-
+import './css/cart.css';
 
 const Cart = ({ cartItems, user }) => {
     const [selectedItems, setSelectedItems] = useState([]);
@@ -12,7 +10,7 @@ const Cart = ({ cartItems, user }) => {
         calculateTotal();
     }, [selectedItems, cartItems]);
 
-    const handleCheckboxChange = (cartItemId, price) => {
+    const handleCheckboxChange = (cartItemId) => {
         setSelectedItems((prevItems) =>
             prevItems.includes(cartItemId)
                 ? prevItems.filter((id) => id !== cartItemId)
@@ -21,6 +19,13 @@ const Cart = ({ cartItems, user }) => {
     };
 
     const calculateTotal = () => {
+        if (!Array.isArray(cartItems)) {
+            // Nếu cartItems không phải là mảng, thì trả về 0
+            setTotalPrice(0);
+            setGrandTotal(0);
+            return;
+        }
+
         let total = 0;
         cartItems.forEach((item) => {
             if (selectedItems.includes(item.cartItemId)) {
@@ -51,7 +56,7 @@ const Cart = ({ cartItems, user }) => {
                 </div>
             ) : (
                 <>
-                    {cartItems.length > 0 ? (
+                    {cartItems && cartItems.length > 0 ? (
                         <div className="row">
                             <div className="col-md-9">
                                 <br />
@@ -86,7 +91,7 @@ const Cart = ({ cartItems, user }) => {
                                                             type="checkbox"
                                                             checked={selectedItems.includes(item.cartItemId)}
                                                             onChange={() =>
-                                                                handleCheckboxChange(item.cartItemId, item.price)
+                                                                handleCheckboxChange(item.cartItemId)
                                                             }
                                                         />
                                                     </td>

@@ -1,288 +1,144 @@
 import Carousel from 'react-bootstrap/Carousel';
 
 function Banner() {
-
   const products = [
     { id: 1, imgSrc: 'images/item1.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0, discount: null, status: 'New' },
-    { id: 2, imgSrc: 'images/item2.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0, discount: null },
-    { id: 3, imgSrc: 'images/item3.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0, discount: null, status:'-10%' },
-    { id: 4, imgSrc: 'images/item4.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0, discount: null },
-  ];
-
-  const product = [
-    { id: 1, category: 'cat', imgSrc: 'images/item9.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0 },
-    { id: 2, category: 'dog', imgSrc: 'images/item10.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0 },
-    { id: 3, category: 'dog', imgSrc: 'images/item11.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0 },
-    { id: 4, category: 'cat', imgSrc: 'images/item12.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0, status: 'Sold' },
-    { id: 5, category: 'bird', imgSrc: 'images/item13.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0 },
-    { id: 6, category: 'bird', imgSrc: 'images/item14.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0 },
-    { id: 7, category: 'dog', imgSrc: 'images/item15.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0, status: 'Sale' },
-    { id: 8, category: 'cat', imgSrc: 'images/item16.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0 },
+    { id: 2, imgSrc: 'images/item2.jpg', title: 'Red t-shirt', price: '$15.00', rating: 4.5, discount: null },
+    { id: 3, imgSrc: 'images/item3.jpg', title: 'Blue sneakers', price: '$25.00', rating: 4.0, discount: null, status: '-10%' },
+    { id: 4, imgSrc: 'images/item4.jpg', title: 'Green backpack', price: '$20.00', rating: 4.8, discount: null },
   ];
 
   const blogs = [
     {
-        date: '20',
-        month: 'Feb',
-        title: '10 Reasons to be helpful towards any animals',
-        image: 'images/blog1.jpg',
-        description: 'At the core of our practice is the idea that cities are the incubators of our greatest achievements, and the best hope for a sustainable future.',
-        link: 'single-post.html'
+      date: '20',
+      month: 'Feb',
+      title: '10 Reasons to be helpful towards any animals',
+      image: 'images/blog1.jpg',
+      description: 'At the core of our practice is the idea that cities are the incubators of our greatest achievements.',
+      link: 'single-post.html'
     },
     {
-        date: '21',
-        month: 'Feb',
-        title: 'How to know your pet is hungry',
-        image: 'images/blog2.jpg',
-        description: 'At the core of our practice is the idea that cities are the incubators of our greatest achievements, and the best hope for a sustainable future.',
-        link: 'single-post.html'
+      date: '21',
+      month: 'Feb',
+      title: 'How to know your pet is hungry',
+      image: 'images/blog2.jpg',
+      description: 'Understanding your pet’s needs is crucial for their well-being.',
+      link: 'single-post.html'
     },
     {
-        date: '22',
-        month: 'Feb',
-        title: 'Best home for your pets',
-        image: 'images/blog3.jpg',
-        description: 'At the core of our practice is the idea that cities are the incubators of our greatest achievements, and the best hope for a sustainable future.',
-        link: 'single-post.html'
+      date: '22',
+      month: 'Feb',
+      title: 'Best home for your pets',
+      image: 'images/blog3.jpg',
+      description: 'Creating a comfortable space for your pets is essential.',
+      link: 'single-post.html'
     }
-];
+  ];
 
-const instagramImages = [
-  { src: 'images/insta1.jpg', alt: 'insta-img' },
-  { src: 'images/insta2.jpg', alt: 'insta-img' },
-  { src: 'images/insta3.jpg', alt: 'insta-img' },
-  { src: 'images/insta4.jpg', alt: 'insta-img' },
-  { src: 'images/insta5.jpg', alt: 'insta-img' },
-  { src: 'images/insta6.jpg', alt: 'insta-img' }
-];
+  const instagramImages = [
+    { src: 'images/insta1.jpg', alt: 'Instagram image 1' },
+    { src: 'images/insta2.jpg', alt: 'Instagram image 2' },
+    { src: 'images/insta3.jpg', alt: 'Instagram image 3' },
+    { src: 'images/insta4.jpg', alt: 'Instagram image 4' },
+    { src: 'images/insta5.jpg', alt: 'Instagram image 5' },
+    { src: 'images/insta6.jpg', alt: 'Instagram image 6' }
+  ];
 
   return (
     <>
+      {/* Carousel */}
       <Carousel>
         <Carousel.Item interval={1000}>
-          <div className="img-wrapper col-md-12">
-            <img src="images/anh1.jpg" className="img-fluid" alt="Banner 1" />
-          </div>
+          <img src="images/anh1.jpg" className="d-block w-100" alt="Banner 1" />
         </Carousel.Item>
         <Carousel.Item interval={500}>
-          <div className="img-wrapper col-md-12">
-            <img src="images/anh2.jpg" className="img-fluid" alt="Banner 2" />
-          </div>
+          <img src="images/anh2.jpg" className="d-block w-100" alt="Banner 2" />
         </Carousel.Item>
         <Carousel.Item>
-          <div className="img-wrapper col-md-12">
-            <img src="images/anh3.jpg" className="img-fluid" alt="Banner 3" />
-          </div>
+          <img src="images/anh3.jpg" className="d-block w-100" alt="Banner 3" />
         </Carousel.Item>
       </Carousel>
 
-      <section id="categories">
-        <div className="container my-3 py-5">
-        <h2 className="display-4 fw-normal">Thú Cưng Yêu Tích Của Bạn</h2>
-          <div className="row my-5 text-center">
-          
-            <div className="col">
-              <a href="#" className="categories-item">
-                <h3>Chuột Hamster</h3>
-              </a>
-            </div>
-            <div className="col">
-              <a href="#" className="categories-item">
-                <h3>Thỏ</h3>
-              </a>
-            </div>
-            <div className="col">
-              <a href="#" className="categories-item">
-                <h3>Chim vẹt</h3>
-              </a>
-            </div>
-            <div className="col">
-              <a href="#" className="categories-item">
-                <h3>Chó</h3>
-              </a>
-            </div>
-            <div className="col">
-              <a href="#" className="categories-item">
-                <h3>Mèo</h3>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="clothing">
-  <div className="container my-5 py-5">
-    <div className="section-header d-md-flex justify-content-between align-items-center">
-      <h2 className="display-4 fw-normal">Thời Trang Thú Cưng</h2>
-    </div>
-
-    <div className="isotope-container row">
-      {products.map(product => (
-        <div className={`item ${product.category} col-md-4 col-lg-3 my-4`} key={product.id}>
-          {product.status && (
-            <div className="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              {product.status}
-            </div>
-          )}
-          <div className="card position-relative">
-            <a href="single-product.html"><img src={product.imgSrc} className="img-fluid rounded-4" alt="image" /></a>
-            <div className="card-body p-0">
-              <a href="single-product.html" className='title'>
-                <h3 className="card-title pt-4 m-0">{product.title}</h3>
-              </a>
-
-              <div className="card-text">
-              <span className="rating secondary-font">
-  {[...Array(5)].map((_, index) => (
-    <iconify-icon key={index} icon="clarity:star-solid"></iconify-icon>
-  ))}
-  <span className="rating-number">{product.rating}</span> {/* Chỉnh số 5 vào thẻ span */}
-</span>
-
-
-                <h3 className="secondary-font">{product.price}</h3>
-
-                <div className="d-flex justify-content-center flex-wrap mt-3">
-  <a href="#" className="btn-cart me-3 px-4 pt-3 pb-3">
-    <h5 className="text-uppercase m-0">Add to Cart</h5>
-  </a>
-  <a href="#" className="btn-wishlist px-4 pt-3">
-    <iconify-icon icon="fluent:heart-28-filled" className="fs-5"></iconify-icon>
-  </a>
-</div>
-
-
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-<section id="clothing">
-  <div className="container">
-    <div className="section-header d-md-flex justify-content-between align-items-center">
-      <h2 className="display-4 fw-normal">Thức ăn Thú Cưng</h2>
-    </div>
-
-    <div className="isotope-container row">
-      {product.map(product => (
-        <div className={`item ${product.category} col-md-4 col-lg-3 my-4`} key={product.id}>
-          {product.status && (
-            <div className="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              {product.status}
-            </div>
-          )}
-          <div className="card position-relative">
-            <a href="single-product.html"><img src={product.imgSrc} className="img-fluid rounded-4" alt="image" /></a>
-            <div className="card-body p-0">
-              <a href="single-product.html" className='title'>
-                <h3 className="card-title pt-4 m-0">{product.title}</h3>
-              </a>
-
-              <div className="card-text">
-              <span className="rating secondary-font">
-  {[...Array(5)].map((_, index) => (
-    <iconify-icon key={index} icon="clarity:star-solid"></iconify-icon>
-  ))}
-  <span className="rating-number">{product.rating}</span> {/* Chỉnh số 5 vào thẻ span */}
-</span>
-
-
-                <h3 className="secondary-font">{product.price}</h3>
-
-                <div className="d-flex justify-content-center flex-wrap mt-3">
-  <a href="#" className="btn-cart me-3 px-4 pt-3 pb-3">
-    <h5 className="text-uppercase m-0">Add to Cart</h5>
-  </a>
-  <a href="#" className="btn-wishlist px-4 pt-3">
-    <iconify-icon icon="fluent:heart-28-filled" className="fs-5"></iconify-icon>
-  </a>
-</div>
-
-
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-<section id="banner-2" className="my-3" style={{ background: '#F9F3EC' }}>
+      {/* Categories Section */}
+      <section id="categories" className="my-5 text-center">
         <div className="container">
-          <div className="row flex-row-reverse banner-content align-items-center">
-            <div className="img-wrapper col-12 col-md-6">
-              <img src="images/banner-img2.png" className="img-fluid" alt="Banner" />
-            </div>
-            <div className="content-wrapper col-12 offset-md-1 col-md-5 p-5">
-              <div className="secondary-font text-primary text-uppercase mb-3 fs-4">Upto 40% off</div>
-              <h2 className="banner-title display-1 fw-normal">Clearance sale !!!</h2>
-              <a href="#" className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                shop now
-                <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
-                  <use xlinkHref="#arrow-right"></use>
-                </svg>
-              </a>
-            </div>
+          <h2 className="display-4 fw-normal">Danh Mục Thú Cưng</h2>
+          <div className="row my-5">
+            {['Chó', 'Mèo', 'Chim Vẹt', 'Thỏ', 'Chuột Hamster'].map((category, index) => (
+              <div className="col" key={index}>
+                <a href="#" className="categories-item">
+                  <h3>{category}</h3>
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-<section id="latest-blog">
-            <div className="container">
-                <div className="row mt-5">
-                    <div className="section-header d-md-flex justify-content-between align-items-center mb-3">
-                        <h2 className="display-4 fw-normal">Bài Đăng Trên Blog Mới Nhất</h2>
-                        <div>
-                        </div>
+      {/* Products Section */}
+      <section id="products" className="my-5">
+        <div className="container">
+          <h2 className="display-4 fw-normal">Sản Phẩm Nổi Bật</h2>
+          <div className="row">
+            {products.map(product => (
+              <div className="col-md-3 my-4" key={product.id}>
+                <div className="card">
+                  <a href="single-product.html">
+                    <img src={product.imgSrc} className="card-img-top" alt={product.title} />
+                  </a>
+                  <div className="card-body text-center">
+                    <h5 className="card-title">{product.title}</h5>
+                    <p className="card-text">{product.price}</p>
+                    <div className="d-flex justify-content-center">
+                      <button className="btn btn-primary me-2" onClick={() => alert('Đã thêm vào giỏ!')}>Thêm vào giỏ</button>
+                      <button className="btn btn-outline-danger">Yêu thích</button>
                     </div>
+                  </div>
                 </div>
-                <div className="row">
-                    {blogs.map((blog, index) => (
-                        <div className="col-md-4 my-4 my-md-0" key={index}>
-                            <div className="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-                                <h3 className="secondary-font text-primary m-0">{blog.date}</h3>
-                                <p className="secondary-font fs-6 m-0">{blog.month}</p>
-                            </div>
-                            <div className="card position-relative">
-                                <a href={blog.link}>
-                                    <img src={blog.image} className="img-fluid rounded-4" alt="image" />
-                                </a>
-                                <div className="card-body p-0">
-                                    <a href={blog.link} className='blog-read'>
-                                        <h3 className="card-title pt-4 pb-3 m-0">{blog.title}</h3>
-                                    </a>
-                                    <div className="card-text">
-                                        <p className="blog-paragraph fs-6">{blog.description}</p>
-                                        <a href={blog.link} className="blog-read">read more</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Blogs Section */}
+      <section id="latest-blog" className="my-5">
+        <div className="container">
+          <h2 className="display-4 fw-normal">Bài Đăng Trên Blog Mới Nhất</h2>
+          <div className="row">
+            {blogs.map((blog, index) => (
+              <div className="col-md-4 my-4" key={index}>
+                <div className="card">
+                  <a href={blog.link}>
+                    <img src={blog.image} className="card-img-top" alt={blog.title} />
+                  </a>
+                  <div className="card-body">
+                    <h5 className="card-title">{blog.title}</h5>
+                    <p className="card-text">{blog.description}</p>
+                    <a href={blog.link} className="btn btn-outline-primary">Đọc thêm</a>
+                  </div>
                 </div>
-            </div>
-        </section>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-         <section id="insta">
-            <div className="row g-0 py-5">
-                {instagramImages.map((image, index) => (
-                    <div className="col instagram-item text-center position-relative" key={index}>
-                        <div className="icon-overlay d-flex justify-content-center position-absolute">
-                            <iconify-icon className="text-white" icon="la:instagram"></iconify-icon>
-                        </div>
-                        <a href="#">
-                            <img src={image.src} alt={image.alt} className="img-fluid rounded-3" />
-                        </a>
-                    </div>
-                ))}
-            </div>
-        </section>
-
+      {/* Instagram Section */}
+      <section id="insta" className="my-5">
+        <div className="container">
+          <h2 className="display-4 fw-normal text-center">Theo Dõi Chúng Tôi Trên Instagram</h2>
+          <div className="row g-0">
+            {instagramImages.map((image, index) => (
+              <div className="col instagram-item text-center position-relative" key={index}>
+                <a href="#">
+                  <img src={image.src} alt={image.alt} className="img-fluid rounded" />
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
