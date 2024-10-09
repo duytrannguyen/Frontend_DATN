@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './css/cart.css';
+import '../css/cart.css';
 
 const Cart = ({ cartItems, user }) => {
     const [selectedItems, setSelectedItems] = useState([]);

@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "../serviceAxios/axios";
 
 function Header() {
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    axios.get("/api/user")
+      .then(response => {
+        setUserInfo(response.data); // Lưu thông tin người dùng
+      })
+      .catch(error => {
+        console.log("Người dùng chưa đăng nhập");
+      });
+  }, []);
+
   return (
     <header>
       <div className="container py-2">
@@ -15,12 +28,7 @@ function Header() {
 
           <div className="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
             <div className="search-bar border rounded-2 px-3 border-dark-subtle">
-              <form
-                id="search-form"
-                className="text-center d-flex align-items-center"
-                action=""
-                method=""
-              >
+              <form id="search-form" className="text-center d-flex align-items-center">
                 <input
                   type="text"
                   className="form-control border-0 bg-transparent"
@@ -41,7 +49,7 @@ function Header() {
             </div>
           </div>
 
-          <div className="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
+          <div className="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0">
             <div className="support-box text-end d-none d-xl-block">
               <span className="fs-6 secondary-font text-muted">Phone</span>
               <h5 className="mb-0">+980-34984089</h5>
@@ -100,7 +108,7 @@ function Header() {
                 <option>All Categories</option>
                 <option>Trang phục</option>
                 <option>Thức ăn</option>
-                <option>Phụ kiên</option>
+                <option>Phụ kiện</option>
                 <option>Thú cưng</option>
               </select>
 
@@ -108,7 +116,6 @@ function Header() {
                 <li className="nav-item">
                   <a href="/" className="nav-link active">Trang chủ</a>
                 </li>
-                
                 <li className="nav-item">
                   <a href="/About_us" className="nav-link active">Giới thiệu</a>
                 </li>
@@ -119,30 +126,42 @@ function Header() {
                   <a href="/Contact" className="nav-link active">Liên hệ</a>
                 </li>
                 <li className="nav-item">
-                  <a href="index.html" className="nav-link active">Khuyến mãi</a>
+                  <a href="/Login" className="nav-link active">Khuyến mãi</a>
                 </li>
               </ul>
 
               <div className="d-none d-lg-flex align-items-end">
                 <ul className="d-flex justify-content-end list-unstyled m-0">
-                <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false"><iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon></a>
-                  <ul className="dropdown-menu" aria-labelledby="pages">
-                    <li><a href="index.html" className="dropdown-item">Đăng ký</a></li>
-                    <li><a href="index.html" className="dropdown-item">Đăng nhập</a></li>
-                    <li><a href="index.html" className="dropdown-item">Single Product</a></li>
-                    <li><a href="/Cart" className="dropdown-item">Cart</a></li>
-                    
-                  </ul>
-                </li>
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span className="fs-4">
+                        {userInfo ? userInfo.fullName : "👤"}
+                      </span>
+                    </a>
+                    <ul className="dropdown-menu" aria-labelledby="pages">
+                      {!userInfo ? (
+                        <>
+                          <li><a href="index.html" className="dropdown-item">Đăng ký</a></li>
+                          <li><a href="/Login" className="dropdown-item">Đăng nhập</a></li>
+                        </>
+                      ) : (
+                        <>
+                          <li><a href="/Account" className="dropdown-item">Tài khoản của tôi</a></li>
+                          <li><a href="/Logout" className="dropdown-item">Đăng xuất</a></li>
+                        </>
+                      )}
+                      <li><a href="index.html" className="dropdown-item">Single Product</a></li>
+                      <li><a href="/Cart" className="dropdown-item">Cart</a></li>
+                    </ul>
+                  </li>
                   <li>
                     <a href="index.html" className="mx-3">
-                      <span className="fs-4"><iconify-icon icon="mdi:heart" class="fs-4"></iconify-icon></span>
+                      <span className="fs-4"><span className="iconify" data-icon="mdi:heart"></span></span>
                     </a>
                   </li>
                   <li>
                     <a href="index.html" className="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                      <span className="fs-4 position-relative"><iconify-icon icon="mdi:cart" class="fs-4 position-relative"></iconify-icon></span>
+                      <span className="fs-4 position-relative"><span className="iconify" data-icon="mdi:cart"></span></span>
                       <span className="position-absolute translate-middle badge rounded-circle bg-danger pt-2">3</span>
                     </a>
                   </li>

@@ -1,12 +1,25 @@
+import React, { useEffect, useState } from "react";
 import Carousel from 'react-bootstrap/Carousel';
+import axios from "../serviceAxios/axios";
 
 function Banner() {
-  const products = [
-    { id: 1, imgSrc: 'images/item1.jpg', title: 'Grey hoodie', price: '$18.00', rating: 5.0, discount: null, status: 'New' },
-    { id: 2, imgSrc: 'images/item2.jpg', title: 'Red t-shirt', price: '$15.00', rating: 4.5, discount: null },
-    { id: 3, imgSrc: 'images/item3.jpg', title: 'Blue sneakers', price: '$25.00', rating: 4.0, discount: null, status: '-10%' },
-    { id: 4, imgSrc: 'images/item4.jpg', title: 'Green backpack', price: '$20.00', rating: 4.8, discount: null },
-  ];
+  const [currentProducts, setCurrentProducts] = useState([]);
+  const [upcomingProducts, setUpcomingProducts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("/api/home/products/postingDate")
+      .then((response) => {
+        setCurrentProducts(response.data.currentProducts);
+        setUpcomingProducts(response.data.upcomingProducts);
+        // console.log(currentProducts);
+
+      })
+      .catch((error) => {
+        setError("Lỗi khi lấy dữ liệu sản phẩm: " + error.message);
+      });
+  }, []);
 
   const blogs = [
     {
@@ -79,28 +92,93 @@ function Banner() {
       <section id="products" className="my-5">
         <div className="container">
           <h2 className="display-4 fw-normal">Sản Phẩm Nổi Bật</h2>
-          <div className="row">
-            {products.map(product => (
-              <div className="col-md-3 my-4" key={product.id}>
-                <div className="card">
-                  <a href="single-product.html">
-                    <img src={product.imgSrc} className="card-img-top" alt={product.title} />
-                  </a>
-                  <div className="card-body text-center">
-                    <h5 className="card-title">{product.title}</h5>
-                    <p className="card-text">{product.price}</p>
-                    <div className="d-flex justify-content-center">
-                      <button className="btn btn-primary me-2" onClick={() => alert('Đã thêm vào giỏ!')}>Thêm vào giỏ</button>
-                      <button className="btn btn-outline-danger">Yêu thích</button>
+
+          {/* Hiển thị lỗi nếu có */}
+          {error ? (
+            <p className="text-danger">Lỗi: {error}</p>
+          ) : (
+            <>
+              {/* Hiển thị sản phẩm hiện tại */}
+              <h3>Sản phẩm hiện tại</h3>
+              <div className="row">
+                {currentProducts.map((product) => (
+                  <div className="col-md-3 my-4" key={product.productId}>
+                    <div className="card">
+                      <a href="/ProductDetail/${id}">
+                        <img
+                          src={`Image_SP/${product.imageUrl}`}
+                          className="card-img-top"
+                          alt={product.productName}
+                        />
+                      </a>
+                      <div className="card-body text-center">
+                        <h5 className="card-title">{product.productName}</h5>
+                        <p className="card-text">
+                          {new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }).format(product.price)}
+                        </p>
+                        <div className="d-flex justify-content-center">
+                          <button
+                            className="btn btn-primary me-2"
+                            onClick={() => alert("Đã thêm vào giỏ!")}
+                          >
+                            Thêm vào giỏ
+                          </button>
+                          <button className="btn btn-outline-danger">
+                            Yêu thích
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+
+
+              {/* Hiển thị sản phẩm sắp ra mắt */}
+              <h3>Sản phẩm sắp ra mắt</h3>
+              <div className="row">
+                {upcomingProducts.map((product) => (
+                  <div className="col-md-3 my-4" key={product.productId}>
+                    <div className="card">
+                      <a href="/ProductDetail">
+                        <img
+                          src={`Image_SP/${product.imageUrl}`}
+                          className="card-img-top"
+                          alt={product.productName}
+                        />
+                      </a>
+                      <div className="card-body text-center">
+                        <h5 className="card-title">{product.productName}</h5>
+                        <p className="card-text">
+                          {new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }).format(product.price)}
+                        </p>
+                        <div className="d-flex justify-content-center">
+                          <button
+                            className="btn btn-primary me-2"
+                            onClick={() => alert("Đã thêm vào giỏ!")}
+                          >
+                            Thêm vào giỏ
+                          </button>
+                          <button className="btn btn-outline-danger">
+                            Yêu thích
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </>
+          )}
         </div>
       </section>
-
       {/* Latest Blogs Section */}
       <section id="latest-blog" className="my-5">
         <div className="container">
