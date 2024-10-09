@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/pay.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/pay.css';
 
 const CheckoutForm = ({ user, cartItems, total, discountAmount, status }) => {
     const [formData, setFormData] = useState({
