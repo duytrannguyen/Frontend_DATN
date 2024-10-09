@@ -1,6 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import logo from "../assets/logo.png"
 function My_Heading({ title }) {
   return (
     <>
@@ -13,8 +14,8 @@ function My_Heading({ title }) {
                   <Link to="/">
                     <img
                       alt="Your Company"
-                      src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"
-                      className="h-auto w-32"
+                      src={logo}
+                      className="h-auto w-32 pt-20"
                     />
                   </Link>
                 </div>
