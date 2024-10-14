@@ -1,0 +1,125 @@
+.img-wrapper {
+    width: 100%; /* Đảm bảo rằng khung hình rộng 100% màn hình */
+    height: 300px; /* Chiều cao toàn bộ chiều cao của cửa sổ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Đảm bảo hình không bị tràn ra ngoài khung */
+  }
+  
+  .img-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Giúp ảnh bao phủ toàn bộ khung mà không bị méo */
+  }
+  
+  .custom-select {
+    border: 2px solid #020102; /* Màu viền hồng nhạt */
+    border-radius: 8px; /* Bo góc viền */
+    padding: 10px 20px; /* Thêm khoảng trống bên trong */
+    background-color: white; /* Nền trắng */
+    color: #333; /* Màu chữ */
+    font-size: 1rem; /* Kích cỡ chữ vừa phải */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi */
+  }
+  
+  .custom-select:focus {
+    outline: none;
+    border-color: #070205; /* Màu viền nổi bật hơn khi focus */
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); /* Hiệu ứng bóng khi focus */
+  }
+  
+  .custom-radio input[type="radio"] {
+    transform: scale(1.4); /* Tăng kích thước của radio */
+    margin-right: 15px; /* Khoảng cách giữa radio và nhãn */
+  }
+  
+  .custom-pagination .page-item .page-link {
+    color: #282225; /* Màu hồng nhạt */
+    background-color: #fff;
+    border: 1px solid #ff69b4;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 0 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .custom-pagination .page-item.active .page-link {
+    background-color: #f0eeee; /* Màu hồng nhạt hơn cho mục active */
+    color: rgb(10, 2, 2);
+    border-color: #ff69b4;
+  }
+  
+  .custom-pagination .page-item:hover .page-link {
+    background-color: #ff69b4;
+    color: rgb(17, 2, 2);
+    border-color: #ff69b4;
+  }
+  
+  .price-filter {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .price-filter .card-header {
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.1rem;
+  }
+  
+  .price-filter .toggle-button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .form-check {
+    margin-bottom: 10px;
+  }
+  
+  .sorting-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .sorting-buttons span {
+    font-size: 16px;
+    margin-right: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sorting-buttons button {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .sorting-buttons button:hover {
+    color: aliceblue;
+    background-color: #ed3da4;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .sorting-buttons button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .title {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .title:hover {
+    text-decoration: none;
+    color: #615e5e;
+  }
