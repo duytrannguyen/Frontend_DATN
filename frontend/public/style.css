@@ -1,8 +1,8 @@
 
 
 .nav-item {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .fs-4 {
@@ -51,6 +51,7 @@
 
 /* Style when hovering on categories item */
 .categories-item:hover {
+  text-decoration: none;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2); /* Tăng độ mạnh của bóng khi hover */
   transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
 }
@@ -199,3 +200,225 @@
   cursor: pointer; /* Thay đổi con trỏ khi hover */
 }
 
+.main-logo a {
+  text-decoration: none;
+  color: rgb(253, 252, 252);
+  margin: 0 5px;
+}
+
+.main-logo a:first-child::after {
+  content: "";
+  margin-left: 5px;
+  color: rgb(247, 244, 244);
+}
+
+
+header {
+  height: 175px;
+  background-color: #f75870; /* Màu hồng nhạt cho nền */
+}
+
+.search-bar input {
+  color: #ff3399; /* Màu hồng đậm cho placeholder của search input */
+}
+
+.navbar-toggler,
+.navbar-toggler-icon {
+  color: #ff3399; /* Màu hồng cho icon menu */
+}
+
+.offcanvas-body select, 
+.offcanvas-body .dropdown-item {
+  color: #ff3399; /* Màu hồng cho text trong dropdown */
+}
+
+.badge {
+  background-color: #ff3399; /* Màu hồng cho số badge trên giỏ hàng */
+}
+
+.account-options a {
+  color: #f9f7f7; /* Màu chữ đen */
+  text-decoration: none; /* Bỏ gạch chân */
+  margin-left: 15px; /* Khoảng cách giữa các liên kết */
+}
+
+.account-options a:hover {
+  text-decoration: none;
+  color: #0f0008; /* Đổi màu khi rê chuột vào */
+}
+
+.main-logo a {
+  color: #f9f7f7;
+  text-decoration: none;
+  margin-right: 20px; /* Khoảng cách giữa các liên kết "Kênh người bán" và "Trở thành người bán" */
+}
+
+.main-logo a:hover {
+  text-decoration: none;
+  color: #080003;
+}
+
+#search-form .form-control {
+  width: 100%; /* Sử dụng hết chiều rộng của khối cha */
+  max-width: 660px; /* Đặt chiều dài tối đa nếu cần */
+}
+
+#search-form {
+  width: 100%; /* Đảm bảo form chiếm toàn bộ chiều rộng */
+}
+
+#search-form {
+  position: relative;
+  width: 100%;
+}
+
+#search-form input {
+  padding-right: 40px; /* Tạo khoảng trống cho icon ở bên phải */
+}
+
+#search-form svg {
+  position: absolute;
+  right: 10px; /* Đặt icon cách mép phải input một khoảng 10px */
+  top: 50%;
+  transform: translateY(-50%); /* Đặt icon vào giữa chiều dọc của input */
+  cursor: pointer; /* Biến icon thành dạng con trỏ click được */
+}
+
+.offcanvas-body {
+  justify-content: flex-start; /* Căn menu về phía bên trái */
+}
+
+.filter-categoriess {
+  font-weight: bold; /* Tăng độ đậm cho chữ "DANH MỤC SẢN PHẨM" */
+}
+
+.navbar-nav {
+  margin-left: 0; /* Đảm bảo menu sát bên trái */
+}
+
+.account-options a {
+  text-decoration: none;
+  color: #ebeff4;
+  display: inline-block;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.filter-categoriess {
+  padding: 0.375rem 0.75rem;
+  color: #03070e;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: inherit;
+  appearance: none; /* Loại bỏ kiểu mặc định của thẻ select */
+}
+
+.filter-categoriess::after {
+  content: '';
+}
+
+.filter-categoriess:focus {
+  outline: none; /* Loại bỏ đường viền khi focus */
+}
+
+/* Tạo mũi tên dropdown tùy chỉnh */
+.custom-select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  left: 90px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Mũi tên không bị click */
+  color: #000309;
+}
+
+.custom-select-wrapper {
+  border: 1px solid transparent;
+  display: inline-block;
+}
+
+#products {
+  background-color: rgb(248, 243, 243); /* Màu nền xám nhẹ */
+  padding: 20px; /* Khoảng cách padding cho phần tử */
+  border-radius: 10px; /* Bo góc nhẹ cho container */
+}
+
+.container-fluid {
+  width: 100%;
+  max-width: 100%;
+}
+
+.card {
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
+}
+
+.price {
+  color: red; /* Đổi màu giá thành màu đỏ */
+  font-weight: bold; /* Đậm hơn */
+}
+
+.buy {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 5px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-button, .wishlist-button {
+  background-color: #f8f9fa; /* Màu nền nhạt */
+  border: none; /* Không viền */
+  border-radius: 8px; /* Bo góc nhẹ cho hình chữ nhật */
+  font-size: 1.5rem; /* Kích thước icon */
+  padding: 10px 20px; /* Khoảng đệm trong nút (padding) */
+  display: flex;
+  align-items: center; /* Căn giữa icon theo chiều dọc */
+  justify-content: center; /* Căn giữa icon theo chiều ngang */
+  cursor: pointer; /* Đổi con trỏ thành dạng trỏ tay */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng màu nền và màu chữ */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng nhẹ */
+}
+
+.cart-button:hover {
+  background-color: red; /* Màu nền đỏ khi rê chuột */
+  color: white; /* Màu icon trắng */
+}
+
+.wishlist-button:hover {
+  background-color: #ff69b4; /* Màu nền hồng khi rê chuột */
+  color: white; /* Màu icon trắng */
+}
+
+#latest-blog .blog-image {
+  width: 100%; /* Đảm bảo hình ảnh chiếm hết chiều ngang của thẻ card */
+  height: auto; /* Giữ tỷ lệ khung hình theo kích thước gốc */
+  object-fit: cover; /* Cắt hình ảnh cho phù hợp với kích thước container mà không làm biến dạng */
+  max-height: 100%; /* Giới hạn chiều cao tối đa để đồng nhất hình ảnh trên tất cả các thẻ */
+}
+
+.card {
+  border-radius: 10px; /* Bo góc nhẹ cho thẻ */
+  overflow: hidden; /* Ẩn phần hình ảnh vượt ra ngoài */
+}
+
+.card-body {
+  padding: 15px;
+}
