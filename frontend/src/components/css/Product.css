@@ -1,4 +1,6 @@
-.img-wrapper {
+
+.img-wrappers {
+
     width: 100%; /* Đảm bảo rằng khung hình rộng 100% màn hình */
     height: 300px; /* Chiều cao toàn bộ chiều cao của cửa sổ */
     display: flex;
@@ -7,7 +9,8 @@
     overflow: hidden; /* Đảm bảo hình không bị tràn ra ngoài khung */
   }
   
-  .img-wrapper img {
+
+  .img-wrappers img {
     width: 100%;
     height: auto;
     object-fit: cover; /* Giúp ảnh bao phủ toàn bộ khung mà không bị méo */
@@ -46,7 +49,7 @@
   }
   
   .custom-pagination .page-item.active .page-link {
-    background-color: #f0eeee; /* Màu hồng nhạt hơn cho mục active */
+    background-color: #f5eff0; /* Màu hồng nhạt hơn cho mục active */
     color: rgb(10, 2, 2);
     border-color: #ff69b4;
   }
@@ -123,3 +126,4 @@
     text-decoration: none;
     color: #615e5e;
   }
+

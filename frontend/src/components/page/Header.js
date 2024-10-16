@@ -116,7 +116,7 @@ function Header() {
                   <a href="/Product" className="nav-link active">Sản phẩm</a>
                 </li>
                 <li className="nav-item">
-                  <a href="index.html" className="nav-link active">Liên hệ</a>
+                  <a href="/Contact" className="nav-link active">Liên hệ</a>
                 </li>
                 <li className="nav-item">
                   <a href="index.html" className="nav-link active">Khuyến mãi</a>
@@ -131,7 +131,7 @@ function Header() {
                     <li><a href="index.html" className="dropdown-item">Đăng ký</a></li>
                     <li><a href="index.html" className="dropdown-item">Đăng nhập</a></li>
                     <li><a href="index.html" className="dropdown-item">Single Product</a></li>
-                    <li><a href="index.html" className="dropdown-item">Cart</a></li>
+                    <li><a href="/Cart" className="dropdown-item">Cart</a></li>
                     
                   </ul>
                 </li>
