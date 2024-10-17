@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import './css/cart.css';
 
 const Cart = ({ cartItems, user }) => {
@@ -6,19 +6,7 @@ const Cart = ({ cartItems, user }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [grandTotal, setGrandTotal] = useState(0);
 
-    useEffect(() => {
-        calculateTotal();
-    }, [selectedItems, cartItems]);
-
-    const handleCheckboxChange = (cartItemId) => {
-        setSelectedItems((prevItems) =>
-            prevItems.includes(cartItemId)
-                ? prevItems.filter((id) => id !== cartItemId)
-                : [...prevItems, cartItemId]
-        );
-    };
-
-    const calculateTotal = () => {
+    const calculateTotal = useCallback(() => {
         if (!Array.isArray(cartItems)) {
             // Nếu cartItems không phải là mảng, thì trả về 0
             setTotalPrice(0);
@@ -33,19 +21,31 @@ const Cart = ({ cartItems, user }) => {
             }
         });
         setTotalPrice(total);
-        setGrandTotal(total); // Adjust this if VAT or other fees are added
+        setGrandTotal(total); // Điều chỉnh nếu có VAT hoặc các chi phí khác
+    }, [cartItems, selectedItems]);
+
+    useEffect(() => {
+        calculateTotal();
+    }, [selectedItems, cartItems, calculateTotal]);
+
+    const handleCheckboxChange = (cartItemId) => {
+        setSelectedItems((prevItems) =>
+            prevItems.includes(cartItemId)
+                ? prevItems.filter((id) => id !== cartItemId)
+                : [...prevItems, cartItemId]
+        );
     };
 
     const incrementValue = (cartItemId) => {
-        // Update quantity logic here
+        // Thêm logic tăng số lượng sản phẩm
     };
 
     const decrementValue = (cartItemId) => {
-        // Update quantity logic here
+        // Thêm logic giảm số lượng sản phẩm
     };
 
     const proceedToPayment = () => {
-        // Payment process logic
+        // Logic xử lý thanh toán
     };
 
     return (
@@ -115,7 +115,7 @@ const Cart = ({ cartItems, user }) => {
                                                             style={{ width: "30px" }}
                                                             value={item.quantity}
                                                             onBlur={() => {
-                                                                // Update quantity logic
+                                                                // Logic cập nhật số lượng
                                                             }}
                                                         />
                                                         <button
