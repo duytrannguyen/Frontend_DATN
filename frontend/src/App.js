@@ -30,9 +30,9 @@ import Order from "./seller/Order";
 import ProductDetail from "./components/ProductDetail";
 import ProductManagement from "./components/seller/ProductManagement";
 import CategoryManagement from "./components/seller/CategoryManagement";
-import Headerss from './seller/Header';
-import Sidebar from './seller/sidebar';
-import Dashboard from './seller/main';
+import Headerss from "./seller/Header";
+import Sidebar from "./seller/sidebar";
+import Dashboard from "./seller/main";
 // >>>>>>> dev
 
 // function App() {
@@ -55,31 +55,30 @@ import Dashboard from './seller/main';
 // export default App;
 const App = () => {
   return (
-// <<<<<<< khangdn
-    <div>  
-      <Headerss />
-      <Sidebar />
-      <Dashboard />
-      {/* Các component khác của ứng dụng */}
-// =======
-    <div className="app-container">
-      <Header />
-      <Routes>
-        <Route path="/" element={<Banner />} />
-        <Route path="/About_us" element={<About />} />
-        <Route path="/Product" element={<Product />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/Contact" element={<Contact />} />
-        <Route path="/Pay" element={<Pay />} />
-        <Route path="/ProductDetail" element={<ProductDetail />} />
-        <Route path="/ProductManagement" element={<ProductManagement />} />
-        <Route path="/CategoryManagement" element={<CategoryManagement />} />
-        <Route path="/order" element={<Order />} />
-      </Routes>
-      <Footer />
-// >>>>>>> dev
-    </div>
+    <>
+      <div>
+        <Headerss />
+        <Sidebar />
+        <Dashboard />
+      </div>
+      <div className="app-container">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Banner />} />
+          <Route path="/About_us" element={<About />} />
+          <Route path="/Product" element={<Product />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path="/Pay" element={<Pay />} />
+          <Route path="/ProductDetail" element={<ProductDetail />} />
+          <Route path="/ProductManagement" element={<ProductManagement />} />
+          <Route path="/CategoryManagement" element={<CategoryManagement />} />
+          <Route path="/order" element={<Order />} />
+        </Routes>
+        <Footer />
+      </div>
+    </>
   );
-}
+};
 
 export default App;
