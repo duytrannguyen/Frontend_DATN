@@ -1,6 +1,6 @@
 import { Layout, Select } from "antd";
 import { useState, useEffect } from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import {
   getProvinces,
   getDistricts,
@@ -52,9 +52,8 @@ const AccountAddress = () => {
     const response = await getAddressesService(usersId);
     console.log(response);
     setAddresses(response);
-  }
+  };
   const onFinish = (values) => {
-    console.log("Success:", values);
     const data = {
       idProvince: values.province.split("/")[0],
       idDistrict: values.disrtict.split("/")[0],
@@ -64,9 +63,9 @@ const AccountAddress = () => {
       district: values.disrtict.split("/")[1],
       commune: values.commune.split("/")[1],
     };
-    console.log(data);
-    addAddressService(usersId,data).then((res) => {
-      console.log(res);
+
+    addAddressService(usersId, data).then(() => {
+      message.success("Thêm địa chỉ thành công!");
       fetchAddresses();
     });
   };
@@ -180,7 +179,10 @@ const AccountAddress = () => {
               }}
             >
               <Button
-                className="bg-[#ee4d2d] text-white"
+                style={{
+                  backgroundColor: "gray",
+                  color: "white",
+                }}
                 type="text"
                 htmlType="submit"
               >
@@ -190,7 +192,11 @@ const AccountAddress = () => {
           </Form>
         </div>
       </div>
-      <AccountAddressTable reset={fetchAddresses} list={addresses} id={usersId} />
+      <AccountAddressTable
+        reset={fetchAddresses}
+        list={addresses}
+        id={usersId}
+      />
     </Layout.Content>
   );
 };

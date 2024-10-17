@@ -60,7 +60,7 @@ function My_Form_Login({ event, toF, toR, spin }) {
                 <button
                   disabled={spin}
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-[#ee4d2d] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center rounded-md bg-gray-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   <div>
                     <Spin
@@ -79,7 +79,7 @@ function My_Form_Login({ event, toF, toR, spin }) {
                     <div className="text-xs  pt-2">
                       <Link
                         to={toF}
-                        className="font-normal text-indigo-800 hover:text-indigo-500"
+                        className="font-normal text-gray-400 hover:text-indigo-500"
                       >
                         Quên mật khẩu?
                       </Link>
@@ -90,7 +90,7 @@ function My_Form_Login({ event, toF, toR, spin }) {
                     <div className="text-xs  pt-2">
                       <Link
                         to={toR}
-                        className="font-normal text-[#d0011b] hover:text-orange-800"
+                        className="font-normal text-gray-400 hover:text-indigo-500"
                       >
                         Đăng ký
                       </Link>
@@ -100,9 +100,9 @@ function My_Form_Login({ event, toF, toR, spin }) {
               </div>
               <div>
                 <Link
-                  to="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:5173&response_type=code&client_id=188735233699-grpbdfailsflahui00gpci9cvd2krm3p.apps.googleusercontent.com&approval_prompt=force"
+                  to="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:3000&response_type=code&client_id=188735233699-grpbdfailsflahui00gpci9cvd2krm3p.apps.googleusercontent.com&approval_prompt=force"
                   type="button"
-                  className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-red-500 shadow-sm hover:bg-red-600 hover:text-white focus-visible:outline border border-red-600   focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Google
                 </Link>

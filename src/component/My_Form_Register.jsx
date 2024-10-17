@@ -55,8 +55,8 @@ function My_Form_Register({ event, to , spin }) {
                 <button
                   disabled={spin}
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-[#ee4d2d] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
+                  className="flex w-full justify-center rounded-md bg-gray-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
                   <div>
                     <Spin
                       spinning={spin}
@@ -74,7 +74,7 @@ function My_Form_Register({ event, to , spin }) {
                     <div className="text-xs  pt-2">
                       <Link
                         to={to}
-                        className="font-normal text-[#d0011b] hover:text-orange-800"
+                        className="font-normal text-gray-400 hover:text-indigo-500"
                       >
                         Đăng nhập
                       </Link>

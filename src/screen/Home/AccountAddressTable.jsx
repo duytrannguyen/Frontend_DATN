@@ -50,9 +50,7 @@ const columns = [
 ];
 
 const AccountAddressTable = ({ list, id, reset }) => {
-  const cancel = (e) => {
-    console.log(e);
-  };
+  const cancel = () => {};
   const data = list.map((item, index) => {
     return {
       key: index,
@@ -70,13 +68,11 @@ const AccountAddressTable = ({ list, id, reset }) => {
             description="Có muốn xóa địa chỉ này?"
             onConfirm={() => {
               deleteAddressService(id, item.addressId)
-                .then((res) => {
-                  console.log(res);
+                .then(() => {
                   reset();
                   message.success("Xóa thành công");
                 })
-                .catch((err) => {
-                  console.log(err);
+                .catch(() => {
                   message.error("Xóa thất bại");
                 });
             }}

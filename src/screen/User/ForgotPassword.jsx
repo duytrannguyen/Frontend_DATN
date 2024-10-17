@@ -7,13 +7,11 @@ const ForgotPassword = () => {
   const event = (e) => {
     setSpin(true);
     setTimeout(() => {
-      forgotPasswordService(e.email).then((res) => {
-        console.log(res);
+      forgotPasswordService(e.email).then(() => {
         setSpin(false);
         message.success("Vui lòng kiểm tra email của bạn để lấy lại mật khẩu");
-      }).catch((err) => {
+      }).catch(() => {
         setSpin(false);
-        console.log(err);
         message.error("Email không tồn tại");
       });
     }, 3000);

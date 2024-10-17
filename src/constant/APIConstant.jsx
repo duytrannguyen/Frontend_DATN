@@ -12,3 +12,4 @@ export const REGISTER = "/register";
 
 export const GET_USER = "/v1/userProfile";
 
+export const GET_SELLER = "/v1/seller-profile";

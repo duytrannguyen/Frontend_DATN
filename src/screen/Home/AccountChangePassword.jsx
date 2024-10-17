@@ -18,24 +18,23 @@ const AccountChangePassword = () => {
       } else {
         setTimeout(() => {
           changePasswordService(usersId, values)
-            .then((res) => {
-              console.log(res);
+            .then(() => {
               setSpin(false);
               message.success("Đổi mật khẩu thành công!");
               form.resetFields();
             })
-            .catch((err) => {
-              console.error("Error:", err);
+            .catch(() => {
               setSpin(false);
               message.error("Mật khẩu cũ không đúng!");
             });
         }, 3000);
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (err) {
+      console.log(err);
+      setSpin(false);
       message.error("Đã xảy ra lỗi, vui lòng thử lại!");
     }
-    console.log("Success:", values);
+
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -124,7 +123,7 @@ const AccountChangePassword = () => {
           <Button
             disabled={spin}
             style={{
-              backgroundColor: "#ee4d2d",
+              backgroundColor: "gray",
               color: "white",
             }}
             type="text"

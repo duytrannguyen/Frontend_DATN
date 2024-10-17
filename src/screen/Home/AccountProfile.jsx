@@ -55,15 +55,13 @@ const AccountProfile = () => {
     setSpin(true);
     setTimeout(() => {
       editService(usersId, values, file)
-        .then((res) => {
+        .then(() => {
           setSpin(false);
-          console.log(res);
           message.success("Cập nhật thông tin thành công");
         })
-        .catch((err) => {
+        .catch(() => {
           setSpin(false);
           message.error("Cập nhật thông tin thất bại");
-          console.log(err);
         });
     }, 3000);
   };
@@ -126,6 +124,10 @@ const AccountProfile = () => {
                   required: true,
                   message: "Vui lòng điền đúng thông tin!",
                 },
+                {
+                  pattern: /((09|03|07|08|05)+([0-9]{8})\b)/g,
+                  message: "Số điện thoại không hợp lệ!",
+                },
               ]}
             >
               <Input />
@@ -155,9 +157,47 @@ const AccountProfile = () => {
                   required: true,
                   message: "Vui lòng điền đúng thông tin!",
                 },
+                {
+                  type: "date",
+                  message: "Ngày sinh không hợp lệ!",
+                },
+                {
+                  validator(_, value) {
+                    if (!value) {
+                      return Promise.reject("");
+                    }
+
+                    const selectedDate = new Date(value.toLocaleString());
+                    const currentDate = new Date();
+                    const minAge = 18;
+
+                    if (selectedDate > currentDate) {
+                      return Promise.reject(
+                        "Ngày sinh không thể là tương lai!"
+                      );
+                    }
+
+                    const age =
+                      currentDate.getFullYear() - selectedDate.getFullYear();
+                    const monthDiff =
+                      currentDate.getMonth() - selectedDate.getMonth();
+                    const dayDiff =
+                      currentDate.getDate() - selectedDate.getDate();
+
+                    if (
+                      age < minAge ||
+                      (age === minAge &&
+                        (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)))
+                    ) {
+                      return Promise.reject(`Tuổi phải từ ${minAge} trở lên!`);
+                    }
+
+                    return Promise.resolve();
+                  },
+                },
               ]}
             >
-              <DatePicker />
+              <DatePicker format="DD/MM/YYYY" />
             </Form.Item>
             <Form.Item label="Ảnh đại diện">
               <My_Avatar change={getFileAvar} />
@@ -170,9 +210,8 @@ const AccountProfile = () => {
             >
               <Button
                 disabled={spin}
-                
                 style={{
-                  backgroundColor: "#ee4d2d",
+                  backgroundColor: "gray",
                   color: "white",
                 }}
                 type="text"
@@ -193,9 +232,6 @@ const AccountProfile = () => {
             </Form.Item>
           </Form>
         </div>
-        {/* <div>
-            <My_Avatar />
-        </div> */}
       </div>
     </Layout.Content>
   );

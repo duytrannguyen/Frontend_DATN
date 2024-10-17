@@ -5,6 +5,7 @@ import { TOKEN } from "../../constant/APIConstant";
 import { useNavigate } from "react-router-dom";
 import {
   getGoogleUserInfo,
+  getSellerService,
   getTokenGoogle,
   getUserService,
 } from "../../service/API";
@@ -12,7 +13,7 @@ const items1 = [
   {
     id: 1,
     title: "Kênh người bán",
-    to: "/seller/login",
+    to: "http://localhost:5174/seller/login",
   },
   {
     id: 2,
@@ -59,21 +60,20 @@ const HomePage = () => {
           getGoogleUserInfo(res)
             .then((res) => {
               localStorage.setItem(TOKEN, res.token);
-              console.log(res);
             })
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch(() => {});
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => {});
+    }
+    const params = new URLSearchParams(location.search);
+    const tokenLink = params.get("token");
+    if (tokenLink) {
+      localStorage.setItem(TOKEN, tokenLink);
     }
     const token = localStorage.getItem(TOKEN);
     if (token) {
       getUserService()
         .then((res) => {
-          console.log(res);
           setData(res);
         })
         .catch(() => {
@@ -95,7 +95,7 @@ const HomePage = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          background: "#ee4d2d",
+          background: "gray",
           height: "40px",
         }}
       >
@@ -111,10 +111,24 @@ const HomePage = () => {
         <div style={{ display: display }}>
           <Button
             onClick={() => {
-              navigate("/register_seller");
+              if (localStorage.getItem(TOKEN)) {
+                getSellerService()
+                  .then(() => {
+                    window.location.href = "http://localhost:5174/seller/home";
+                  })
+                  .catch((err) => {
+                    if (err.response.status === 400) {
+                      const token = localStorage.getItem(TOKEN);
+                      window.location.href =
+                        "http://localhost:5174/register_seller?token=" + token;
+                    }
+                  });
+              } else {
+                window.location.href = "http://localhost:5174/seller/login";
+              }
             }}
             type="button"
-            style={{ background: "#ee4d2d", color: "white" }}
+            style={{ background: "gray", color: "white" }}
             variant="solid"
           >
             Kênh người bán
@@ -129,7 +143,7 @@ const HomePage = () => {
               window.location.reload();
             }}
             type="button"
-            style={{ background: "#ee4d2d", color: "white" }}
+            style={{ background: "gray", color: "white" }}
             variant="solid"
           >
             Đăng xuất

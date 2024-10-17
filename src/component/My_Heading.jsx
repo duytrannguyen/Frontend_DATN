@@ -1,6 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import logo from "../assets/logo.png";
 function My_Heading({ title }) {
   return (
     <>
@@ -13,7 +14,7 @@ function My_Heading({ title }) {
                   <Link to="/">
                     <img
                       alt="Your Company"
-                      src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"
+                      src={logo}
                       className="h-auto w-32"
                     />
                   </Link>
@@ -25,9 +26,7 @@ function My_Heading({ title }) {
                 </div>
               </div>
               <div className="justify-items-end ">
-                <div className="text-orange-400 p-10 mt-2">
-                  <a href="https://help.shopee.vn/vn/s">Bạn cần giúp đỡ?</a>
-                </div>
+             
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import instance from "../config/axios";
-import { GET_USER, LOGIN, REGISTER } from "../constant/APIConstant";
+import { GET_SELLER, GET_USER, LOGIN, REGISTER } from "../constant/APIConstant";
 
 export const loginService = async (email, password) => {
   return await instance.post("/user" + LOGIN, {
@@ -55,7 +55,9 @@ export const forgotPasswordService = async (email) => {
 export const deleteAddressService = async (id, addressId) => {
   return await instance.delete("/v1/deleteAddress/" + id + "/" + addressId);
 };
-
+export const getSellerService = async () => {
+  return await instance.get(GET_SELLER);
+};
 export const editService = async (id, data, profilePicture) => {
   console.log(profilePicture.originFileObj);
   var formData = new FormData();
@@ -94,12 +96,12 @@ export const changePasswordService = async (id, data) => {
 };
 
 export const getTokenGoogle = async (code) => {
-  return await instance.get("/user/getTokenGoogle" ,{
+  return await instance.get("/user/getTokenGoogle", {
     params: {
       code: code,
     },
   });
-}
+};
 
 export const getGoogleUserInfo = async (token) => {
   return await instance.get("/user/getGoogleUserInfo", {
@@ -107,4 +109,4 @@ export const getGoogleUserInfo = async (token) => {
       accessToken: token,
     },
   });
-}
+};

@@ -8,8 +8,7 @@ const Register = () => {
     setSpin(true);
     setTimeout(() => {
       registerService(e.email, e.password)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           setSpin(false);
           message.success("Đăng ký thành công");
         })

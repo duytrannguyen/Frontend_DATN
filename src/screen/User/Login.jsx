@@ -1,12 +1,11 @@
 import My_Form_Login from "../../component/My_Form_Login";
 import { TOKEN } from "../../constant/APIConstant";
-import { useNavigate } from "react-router-dom";
 import { loginService } from "../../service/API";
 import { message } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const Login = () => {
   const [spin, setSpin] = useState(false);
-  const navigate = useNavigate();
+
   const event = (e) => {
     setSpin(true);
     setTimeout(() => {
@@ -14,7 +13,9 @@ const Login = () => {
       loginService(e.email, e.password)
         .then((res) => {
           localStorage.setItem(TOKEN, res.token);
-          navigate("/");
+          window.location.href = "http://localhost:3000?token=" + res.token;
+          // window.location.href = "http://localhost:5173/user/login";
+          // window.location.href = "http://localhost:5174/seller/login";
         })
         .catch((err) => {
           if (err.response.status === 400) {
@@ -22,10 +23,15 @@ const Login = () => {
           } else {
             message.error("Đăng nhập thất bại");
           }
+          33;
         });
-        
     }, 3000);
   };
+  useEffect(() => {
+    if (localStorage.getItem(TOKEN)) {
+      localStorage.removeItem(TOKEN);
+    }
+  }, []);
   return (
     <>
       <My_Form_Login
