@@ -8,33 +8,16 @@ import CategoryManagement from "../components/page/seller/CategoryManagement";
 const Seller_Router = () => {
   return (
     <>
-      <div className="app-container">
-        <Headers />
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12 col-md-3">
-              <Sidebar />
-            </div>
-
-            {/* Do bên App.js đường dẫn đã có sẳn /seller khi muốn chạy thì phải :
+      <Headers />
+      <Sidebar />
+      {/* Do bên App.js đường dẫn đã có sẳn /seller khi muốn chạy thì phải :
         /seller/ (thêm một trong những đường dẫn phía dưới) ví dụ: /seller/dashboard */}
-            <div className="col-12 col-md-9">
-              <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route
-                  path="/ProductManagement"
-                  element={<ProductManagement />}
-                />
-                <Route
-                  path="/CategoryManagement"
-                  element={<CategoryManagement />}
-                />
-                <Route path="/OrderManagement" element={<OrderManagement />} />
-              </Routes>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/ProductManagement" element={<ProductManagement />} />
+        <Route path="/CategoryManagement" element={<CategoryManagement />} />
+        <Route path="/OrderManagement" element={<OrderManagement />} />
+      </Routes>
     </>
   );
 };
