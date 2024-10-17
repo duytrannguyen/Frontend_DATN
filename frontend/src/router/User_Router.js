@@ -8,9 +8,7 @@ import Cart from "../components/page/user/Cart";
 import Contact from "../components/page/user/Contact";
 import Pay from "../components/page/user/Pay";
 import ProductDetail from "../components/page/user/ProductDetail";
-import OrderManagement from "../components/page/seller/OrderManagement";
-import ProductManagement from "../components/page/seller/ProductManagement";
-import CategoryManagement from "../components/page/seller/CategoryManagement";
+
 const User_Router = () => {
   return (
     <div className="app-container">
@@ -23,9 +21,6 @@ const User_Router = () => {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Pay" element={<Pay />} />
         <Route path="/ProductDetail" element={<ProductDetail />} />
-        <Route path="/ProductManagement" element={<ProductManagement />} />
-        <Route path="/CategoryManagement" element={<CategoryManagement />} />
-        <Route path="/order" element={<OrderManagement />} />
       </Routes>
       <Footer />
     </div>

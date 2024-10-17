@@ -14,7 +14,7 @@ const Sidebar = () => {
     <aside id="sidebar" className="sidebar">
       <ul className="sidebar-nav" id="sidebar-nav">
         <li className="nav-item">
-          <Link className="nav-link" to="/index">
+          <Link className="nav-link" to="/seller/dashboard">
             <i className="bi bi-grid"></i>
             <span>Dashboard</span>
           </Link>
@@ -56,7 +56,7 @@ const Sidebar = () => {
             {["Đơn đặt hàng", "Quản lý vận chuyển", "Quản lý đánh giá"].map(
               (item) => (
                 <li key={item}>
-                  <Link to={`forms-${item.toLowerCase().replace(/\s/g, "-")}`}>
+                  <Link to="/seller/OrderManagement">
                     <i className="bi bi-circle"></i>
                     <span>{item}</span>
                   </Link>
