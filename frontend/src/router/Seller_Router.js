@@ -15,6 +15,9 @@ const Seller_Router = () => {
             <div className="col-12 col-md-3">
               <Sidebar />
             </div>
+
+            {/* Do bên App.js đường dẫn đã có sẳn /seller khi muốn chạy thì phải :
+        /seller/ (thêm một trong những đường dẫn phía dưới) ví dụ: /seller/dashboard */}
             <div className="col-12 col-md-9">
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
