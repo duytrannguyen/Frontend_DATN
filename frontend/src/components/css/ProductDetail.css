@@ -1,0 +1,147 @@
+/* ProductDetail.css */
+.containerr {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .image-section {
+    flex: 1;
+  }
+  
+  .product-image {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .info-section {
+    flex: 2;
+    padding: 0 20px;
+  }
+  
+  .product-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  } */
+  
+   .brand, .views-sales {
+    margin: 5px 0;
+  }
+  
+  .price {
+    font-size: 24px;
+    color: red;
+    margin-bottom: 20px;
+  }
+  
+  .selection {
+    margin-bottom: 20px;
+  }
+  
+  .sample-select {
+    padding: 5px;
+  }
+  
+  .quantity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .quantity button {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    margin: 0 10px;
+  }
+  
+  .add-to-cart {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .shipping-info {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .commitments-section {
+    flex: 1;
+    background-color: #f4f4f4;
+    padding: 10px;
+  }
+  
+  .commitments-section h3 {
+    color: green;
+    margin-bottom: 10px;
+  }
+  
+  .commitments-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .commitments-section li {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .commitments-section li::before {
+    content: "✔";
+    color: green;
+    margin-right: 10px;
+  }
+  
+  .cart-button1 {
+    background-color: rgb(21, 21, 21); /* Màu nền ban đầu */
+    color: white; /* Màu chữ */
+    height: 50px;
+    width: 100%; /* Thay đổi thành 100% để nút chiếm toàn bộ chiều rộng của phần chứa */
+    width: 545px; /* Đặt chiều rộng tối đa để tránh vượt quá */
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    border: none; /* Bỏ viền */
+    border-radius: 5px; /* Bo góc cho nút */
+}
+
+.cart-button1:hover {
+    background-color: #080808; /* Màu nền khi di chuột qua */
+}
+
+.wishlist-button1 {
+    color: black; /* Màu chữ ban đầu */
+    border: 2px solid black; /* Viền đen */
+    height: 50px; /* Chiều cao */
+    background-color: white; /* Màu nền */
+    width: 50px; /* Chiều rộng cố định cho nút yêu thích */
+    border-radius: 5px; /* Bo góc cho nút */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Thêm hiệu ứng chuyển đổi */
+}
+
+.wishlist-button1:hover {
+    color: #fefcfd; /* Màu chữ khi di chuột qua */
+    border-color: rgb(199, 4, 36); /* Màu viền khi di chuột qua */
+    background-color: rgb(199, 4, 36); /* Thay đổi màu nền khi di chuột qua */
+}
+
+  
+  .border-description {
+    border: 1px solid white; /* Tạo viền trắng */
+    padding: 15px; /* Thêm khoảng cách bên trong */
+    background-color: #f8f9fa; /* Thay đổi màu nền để nổi bật viền trắng (tùy chọn) */
+  }
+  
+  .text-left {
+    text-align: left; /* Căn chỉnh văn bản sang trái */
+  }
+  
