@@ -1,10 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import "../../../components/css/ProductDetail.css";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-
-const ProductDetail = () => {
+import { showToast, showErrorToast } from "../../../utils/Toast";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+const ProductDetail = ({ productId }) => {
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null); // Dữ liệu sản phẩm hiện tại
+  const [similarProducts, setSimilarProducts] = useState([]); // Sản phẩm tương tự
   const [quantity, setQuantity] = useState(1);
+  productId = 2;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/home/products/${productId}`
+        );
+        setProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching product details", error);
+      }
+    };
+    fetchProduct();
+    showToast("Load dữ liệu thành công");
+  }, [productId]);
+  // Fetch similar products after product is fetched
+  useEffect(() => {
+    const fetchSimilarProducts = async () => {
+      console.log("Current product:", product); // Ghi log để kiểm tra
+      if (product && product.categoryId) {
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/api/home/categories/${product.categoryId}/products`
+          );
+          console.log("Similar products response:", response.data); // Ghi log phản hồi
+          setSimilarProducts(response.data);
+        } catch (error) {
+          console.error("Error fetching similar products", error);
+        }
+      } else {
+        console.log("Product or categoryId is undefined");
+      }
+    };
+
+    fetchSimilarProducts();
+  }, [product]); // Thực hiện khi product được cập nhật
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
@@ -16,73 +58,51 @@ const ProductDetail = () => {
     }
   };
 
-  const products = [
-    {
-      id: 1,
-      imgSrc: "images/item1.jpg",
-      title: "Grey hoodie",
-      price: "$18.00",
-      buy: 500,
-      discount: null,
-    },
-    {
-      id: 2,
-      imgSrc: "images/item2.jpg",
-      title: "Grey hoodie",
-      price: "$18.00",
-      buy: 500,
-      discount: null,
-    },
-    {
-      id: 3,
-      imgSrc: "images/item3.jpg",
-      title: "Grey hoodie",
-      price: "$18.00",
-      buy: 500,
-      discount: null,
-    },
-    {
-      id: 4,
-      imgSrc: "images/item4.jpg",
-      title: "Grey hoodie",
-      price: "$18.00",
-      buy: 500,
-      discount: null,
-    },
-    {
-      id: 4,
-      imgSrc: "images/item4.jpg",
-      title: "Grey hoodie",
-      price: "$18.00",
-      buy: 500,
-      discount: null,
-    },
-  ];
+  const handleAddToCart = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/pet/cart/add/${productId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: { usersId: 1 },
+            quantity: quantity,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        showToast("Thêm vào giỏ hàng thành công!"); // Gọi hàm hiển thị thông báo thành công
+        navigate("/cart");
+      } else {
+        showErrorToast("Lỗi khi thêm sản phẩm vào giỏ hàng"); // Gọi hàm hiển thị thông báo lỗi
+      }
+    } catch (error) {
+      showErrorToast(`Có lỗi xảy ra: ${error.message}`); // Gọi hàm hiển thị thông báo lỗi
+    }
+  };
+
+  if (!product) {
+    return <p>Loading...</p>; // Show a loading state while data is being fetched
+  }
 
   return (
     <>
       <br />
       <div className="container">
         <div className="row d-flex ">
-          {" "}
-          {/* Sử dụng d-flex để tạo bố cục ngang */}
           <div className="col-md-9">
-            {" "}
-            {/* Phần hình ảnh và thông tin sản phẩm */}
             <div className="d-flex">
-              {" "}
-              {/* Sử dụng Flexbox để căn chỉnh phần tử ngang */}
-              {/* Phần hình ảnh */}
               <div className="image-section" style={{ flex: 3 }}>
-                {" "}
-                {/* Tăng flex để hình ảnh chiếm nhiều không gian hơn */}
                 <img
-                  src="https://via.placeholder.com/500" // Thay đổi kích thước hình ảnh
-                  alt="Sample Homie Adult Cat Sterilised"
+                  src={`/images/${product.imageUrl}`}
+                  alt={product.title}
                   className="product-image"
-                  style={{ width: "100%", height: "auto", maxHeight: "400px" }} // Đảm bảo ảnh chiếm hết không gian và có chiều cao tối đa
+                  style={{ width: "100%", height: "auto", maxHeight: "400px" }}
                 />
-                {/* Phần hình nhỏ bên dưới */}
                 <div className="small-images mt-2 d-flex justify-content-between">
                   <img
                     src="https://via.placeholder.com/100"
@@ -101,19 +121,24 @@ const ProductDetail = () => {
                   />
                 </div>
               </div>
-              {/* Phần thông tin sản phẩm */}
               <div className="info-section ml-3" style={{ flex: 1 }}>
-                {" "}
-                {/* Giảm flex để phần thông tin chiếm ít không gian hơn */}
                 <h1 className="product-title1" style={{ fontSize: "1.5rem" }}>
-                  Sample Thức Ăn Mèo Homie Sterilised Adult Chicken 100g
+                  {product.productName}
                 </h1>
                 <p className="brand">
-                  Thương hiệu: <span>HOMIE</span>
+                  Thương hiệu: <span>{product.sellerName}</span>
                 </p>
-                <p className="views-sales"> Số lượng: 8997 | 302 đã bán</p>
+                <p className="views-sales">
+                  Số lượng: {product.quantity} | Giảm giá:{" "}
+                  {product.percentDecrease}%
+                </p>
                 <div className="price">
-                  <span className="current-price">20,000đ</span>
+                  <span className="price">
+                    Giá:{" "}
+                    {product.price
+                      ? product.price.toLocaleString() + "đ"
+                      : "Liên hệ"}
+                  </span>
                 </div>
                 <div className="quantity mt-3 d-flex align-items-center">
                   <div style={{ display: "flex", alignItems: "center" }}>
@@ -159,6 +184,7 @@ const ProductDetail = () => {
                   <button
                     className="cart-button1"
                     style={{ marginRight: "10px" }}
+                    onClick={handleAddToCart}
                   >
                     Thêm vào giỏ hàng
                   </button>
@@ -170,13 +196,9 @@ const ProductDetail = () => {
                   Giao Tận Nơi Hoặc Nhận Tại Cửa Hàng
                 </p>
               </div>
-            </div>{" "}
-            {/* Đóng thẻ d-flex */}
-          </div>{" "}
-          {/* Đóng col-md-9 */}
+            </div>
+          </div>
           <div className="col-md-3">
-            {" "}
-            {/* Phần cam kết bán hàng */}
             <div className="commitments-section">
               <h3>Cam kết bán hàng</h3>
               <ul>
@@ -186,56 +208,38 @@ const ProductDetail = () => {
                 <li>Đổi trả 7 ngày miễn phí.</li>
               </ul>
             </div>
-          </div>{" "}
-          {/* Đóng col-md-3 */}
-        </div>{" "}
-        {/* Đóng row */}
-      </div>{" "}
-      {/* Đóng container */}
+          </div>
+        </div>
+      </div>
       <section id="products" className="my-5">
         <div className="container">
-          <h2 className="display-4 fw-normal text-left">Mô tả</h2>{" "}
-          {/* Thêm class text-left để căn chỉnh tiêu đề sang trái */}
+          <h2 className="display-4 fw-normal text-left">Mô tả</h2>
           <hr />
           <br />
           <Row className="g-4 border-description">
-            {" "}
-            {/* Thêm class border-description để áp dụng viền trắng */}
-            <p>
-              {" "}
-              {/* Để giữ định dạng sạch sẽ, bạn có thể sử dụng thẻ <p> cho mô tả */}
-              THÔNG TIN SẢN PHẨM: <br />
-              - Tên sản phẩm: Bát ăn có đế nghiêng chống gù cho chó mèo. <br />
-              Đối với các bé trưởng thành, bát thức ăn bệt gây tác hại mỏi xương
-              cổ, ảnh hưởng xương sống. Quá trình nhai nuốt cũng không hiệu quả
-              do phải cúi thấp. Bát thức ăn nâng cao và điều chỉnh được độ
-              nghiêng 15 độ là giải pháp an toàn cho vật nuôi. Tư thế thoải mái,
-              dễ chịu khi nhai nuốt sẽ làm vật nuôi dễ dàng hấp thụ thức ăn.
-              Tránh tác động xấu về lâu dài lên hệ cơ xương và tiêu hóa. <br />
-              - Chất liệu: Nhựa PP an toàn cho sức khỏe và thân thiện với môi
-              trường. Chịu nhiệt tốt. Dễ dàng lau chùi. <br />- Kích thước: dài,
-              rộng 13 cm, cao 14.5 cm.
-            </p>
+            <p>{product.description}</p>
           </Row>
         </div>
       </section>
       <section id="products" className="my-5">
         <div className="container">
-          <h2 className="display-4 fw-normal text-left">Sản Phẩm Tương Tự</h2>{" "}
-          {/* Thêm class text-left để căn chỉnh tiêu đề sang trái */}
+          <h2 className="display-4 fw-normal text-left">Sản Phẩm Tương Tự</h2>
           <hr />
           <Row xs={1} md={5} className="g-4">
-            {" "}
-            {/* Điều chỉnh số cột theo kích thước màn hình */}
-            {products.map((product) => (
-              <Col key={product.id}>
+            {similarProducts.map((similarProduct) => (
+              <Col key={similarProduct.id}>
                 <Card>
-                  <Card.Img src={product.imgSrc} alt={product.title} />
+                  <Card.Img
+                    src={`/images/${similarProduct.imageUrl}`}
+                    alt={similarProduct.title}
+                  />
+
                   <Card.Body>
-                    <Card.Title>{product.title}</Card.Title>
+                    <Card.Title>{similarProduct.title}</Card.Title>
                     <Card.Text>
-                      <span className="price">Giá: {product.price}</span> <br />
-                      <p className="buy">{product.buy} đã bán</p>
+                      <span className="price">Giá: {similarProduct.price}</span>{" "}
+                      <br />
+                      <p className="buy">{similarProduct.quantity} Còn lại</p>
                     </Card.Text>
                     <div className="d-flex justify-content-between">
                       <button className="cart-button">

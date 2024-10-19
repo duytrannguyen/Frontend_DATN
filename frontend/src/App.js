@@ -1,14 +1,16 @@
 /* eslint-disable react/jsx-pascal-case */
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify"; // Nhập ToastContainer và toast
+import "react-toastify/dist/ReactToastify.css"; // Nhập CSS của toastify
 import "./App.scss";
 import "./components/css/Product.css";
 import "./components/css/ProductDetail.css";
 import "./components/css/ProductManagement.css";
 import User_Router from "./router/User_Router";
 import Seller_Router from "./router/Seller_Router";
-// import "./seller/css/style.css";
-import Loader from "./components/Loading";
+import Loader from "./utils/Loading";
+
 const App = () => {
   const [loading, setLoading] = useState(true); // Trạng thái loading
 
@@ -24,14 +26,18 @@ const App = () => {
   if (loading) {
     return <Loader />;
   }
+
   return (
-    <Routes>
-      {/* Định tuyến cho giao diện Admin */}
-      <Route path="/seller/*" element={<Seller_Router />} />
-      {/* Định tuyến cho giao diện User */}
-      <Route path="/*" element={<User_Router />} />
-    </Routes>
+    <>
+      <ToastContainer />
+      <Routes>
+        {/* Định tuyến cho giao diện Admin */}
+        <Route path="/seller/*" element={<Seller_Router />} />
+        {/* Định tuyến cho giao diện User */}
+        <Route path="/*" element={<User_Router />} />
+      </Routes>
+    </>
   );
 };
 
-export default App;
+export default App; // Xuất khẩu App
