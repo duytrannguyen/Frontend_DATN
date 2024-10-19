@@ -1,30 +1,37 @@
-import { Routes, Route } from 'react-router-dom';
-import './App.scss';
-import './components/css/Product.css';
-import Header from './components/page/Header';
-import Banner from './components/Banner';
-import Footer from './components/page/Footer';
-import About from './components/About_us';
-import Product from './components/Product';
-import Cart from './components/Cart';
-import Contact from './components/Contact';
-import Pay from './components/Pay';
+/* eslint-disable react/jsx-pascal-case */
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import "./App.scss";
+import "./components/css/Product.css";
+import "./components/css/ProductDetail.css";
+import "./components/css/ProductManagement.css";
+import User_Router from "./router/User_Router";
+import Seller_Router from "./router/Seller_Router";
+// import "./seller/css/style.css";
+import Loader from "./components/Loading";
+const App = () => {
+  const [loading, setLoading] = useState(true); // Trạng thái loading
 
-function App() {
+  useEffect(() => {
+    // Giả lập quá trình tải
+    const timer = setTimeout(() => {
+      setLoading(false); // Thay đổi trạng thái loading sau 2 giây
+    }, 2000);
+
+    return () => clearTimeout(timer); // Dọn dẹp timer khi component bị hủy
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
-    <div className='app-container'>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Banner />} />
-        <Route path="/About_us" element={<About />} />
-        <Route path="/Product" element={<Product />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/Contact" element={<Contact />} />
-        <Route path="/Pay" element={<Pay />} />
-      </Routes>
-      <Footer />
-    </div>
+    <Routes>
+      {/* Định tuyến cho giao diện Admin */}
+      <Route path="/seller/*" element={<Seller_Router />} />
+      {/* Định tuyến cho giao diện User */}
+      <Route path="/*" element={<User_Router />} />
+    </Routes>
   );
-}
+};
 
 export default App;
