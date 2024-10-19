@@ -1,14 +1,45 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "../../css/cart.css";
 
-const Cart = ({ cartItems, user }) => {
+const Cart = () => {
+  // Dữ liệu mẫu cho giỏ hàng
+  const sampleCartItems = [
+    {
+      cartItemId: 1,
+      productId: {
+        productName: "Sản phẩm 1",
+        price: 100000,
+        discountPercentage: 10,
+        imageId: { imageName: "product1.jpg" },
+      },
+      quantity: 2,
+    },
+    {
+      cartItemId: 2,
+      productId: {
+        productName: "Sản phẩm 2",
+        price: 200000,
+        discountPercentage: 20,
+        imageId: { imageName: "product2.jpg" },
+      },
+      quantity: 1,
+    },
+  ];
+
+  // Dữ liệu mẫu cho người dùng
+  const sampleUser = {
+    username: "exampleUser",
+    isAuthenticated: true,
+  };
+
+  const [cartItems, setCartItems] = useState(sampleCartItems);
+  const [user, setUser] = useState(sampleUser);
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
 
   const calculateTotal = useCallback(() => {
     if (!Array.isArray(cartItems)) {
-      // Nếu cartItems không phải là mảng, thì trả về 0
       setTotalPrice(0);
       setGrandTotal(0);
       return;
@@ -24,7 +55,7 @@ const Cart = ({ cartItems, user }) => {
       }
     });
     setTotalPrice(total);
-    setGrandTotal(total); // Điều chỉnh nếu có VAT hoặc các chi phí khác
+    setGrandTotal(total);
   }, [cartItems, selectedItems]);
 
   useEffect(() => {
@@ -40,15 +71,28 @@ const Cart = ({ cartItems, user }) => {
   };
 
   const incrementValue = (cartItemId) => {
-    // Thêm logic tăng số lượng sản phẩm
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.cartItemId === cartItemId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
   };
 
   const decrementValue = (cartItemId) => {
-    // Thêm logic giảm số lượng sản phẩm
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.cartItemId === cartItemId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
   };
 
   const proceedToPayment = () => {
-    // Logic xử lý thanh toán
+    // Chuyển trang đến "/Pay"
+    navigate("/Pay");
   };
 
   return (
@@ -120,9 +164,7 @@ const Cart = ({ cartItems, user }) => {
                             <input
                               style={{ width: "30px" }}
                               value={item.quantity}
-                              onBlur={() => {
-                                // Logic cập nhật số lượng
-                              }}
+                              readOnly
                             />
                             <button
                               type="button"
@@ -136,8 +178,7 @@ const Cart = ({ cartItems, user }) => {
                             <b>
                               {item.productId.price -
                                 (item.productId.price *
-                                  item.productId.discountPercentage) /
-                                  100}{" "}
+                                  item.productId.discountPercentage) / 100}{" "}
                               VNĐ
                             </b>
                           </td>
@@ -145,8 +186,7 @@ const Cart = ({ cartItems, user }) => {
                             <b>
                               {(item.productId.price -
                                 (item.productId.price *
-                                  item.productId.discountPercentage) /
-                                  100) *
+                                  item.productId.discountPercentage) / 100) *
                                 item.quantity}{" "}
                               VNĐ
                             </b>
@@ -190,7 +230,7 @@ const Cart = ({ cartItems, user }) => {
                 <button
                   type="button"
                   className="btn btn-outline-primary"
-                  disabled={selectedItems.length === 0}
+                  // disabled={selectedItems.length === 0}
                   onClick={proceedToPayment}
                 >
                   Thanh Toán
