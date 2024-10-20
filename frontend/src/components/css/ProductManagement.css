@@ -1,0 +1,20 @@
+.form-custom {
+    border: 2px solid white; /* Đặt viền trắng */
+    border-radius: 10px; /* Làm viền bo tròn */
+    padding: 20px; /* Tạo khoảng cách bên trong form */
+    background-color: rgba(255, 255, 255, 0.1); /* Tạo hiệu ứng trong suốt */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng để nổi bật */
+    width: 900px;
+  }
+  
+  
+  /* Đặt viền trắng và phong cách nổi bật cho bảng */
+  .table-custom {
+    border: 2px solid white; /* Đặt viền trắng */
+    border-radius: 10px; /* Làm viền bo tròn */
+    padding: 20px; /* Tạo khoảng cách bên trong form */
+    background-color: rgba(255, 255, 255, 0.1); /* Tạo hiệu ứng trong suốt */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng để nổi bật */
+    width: 900px;
+  }
+  
