@@ -12,7 +12,7 @@ export const showToast = (message) => {
     progress: undefined,
   });
 };
-// Hàm hiển thị thông báo lỗi
+// Hàm hiển thị thông báo lỗi c
 export const showErrorToast = (message) => {
   toast.error(message, {
     position: "top-right",
