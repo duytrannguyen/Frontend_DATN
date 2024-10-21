@@ -6,12 +6,15 @@ import Col from "react-bootstrap/Col";
 import { showToast, showErrorToast } from "../../../utils/Toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const ProductDetail = ({ productId }) => {
+import { useParams } from "react-router-dom";
+const ProductDetail = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null); // Dữ liệu sản phẩm hiện tại
   const [similarProducts, setSimilarProducts] = useState([]); // Sản phẩm tương tự
   const [quantity, setQuantity] = useState(1);
-  productId = 2;
+  const [images, setImages] = useState([]);
+  const { productId } = useParams(); // Lấy productId từ URL
+  // console.log("Product ID:", productId); // Kiểm tra giá trị của productId
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -23,19 +26,22 @@ const ProductDetail = ({ productId }) => {
         console.error("Error fetching product details", error);
       }
     };
-    fetchProduct();
-    showToast("Load dữ liệu thành công");
+
+    if (productId) {
+      // Kiểm tra xem productId có hợp lệ không
+      fetchProduct();
+    }
   }, [productId]);
-  // Fetch similar products after product is fetched
   useEffect(() => {
     const fetchSimilarProducts = async () => {
-      console.log("Current product:", product); // Ghi log để kiểm tra
+      console.log("Current product:", product);
+      console.log("Category ID:", product ? product.categoryId : null);
       if (product && product.categoryId) {
         try {
           const response = await axios.get(
             `http://localhost:8080/api/home/categories/${product.categoryId}/products`
           );
-          console.log("Similar products response:", response.data); // Ghi log phản hồi
+          console.log("Similar products response:", response.data);
           setSimilarProducts(response.data);
         } catch (error) {
           console.error("Error fetching similar products", error);
@@ -47,6 +53,23 @@ const ProductDetail = ({ productId }) => {
 
     fetchSimilarProducts();
   }, [product]); // Thực hiện khi product được cập nhật
+  // Lấy ảnh sản phẩm
+  useEffect(() => {
+    const fetchImages = async () => {
+      if (product) {
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/api/home/products/${product.productId}/images`
+          );
+          setImages(response.data);
+        } catch (error) {
+          console.error("Error fetching images", error);
+        }
+      }
+    };
+
+    fetchImages();
+  }, [product]); // Thực hiện khi product được cập nhật
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
@@ -57,7 +80,10 @@ const ProductDetail = ({ productId }) => {
       setQuantity(quantity - 1);
     }
   };
-
+  // Hàm điều hướng đến trang chi tiết sản phẩm
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
   const handleAddToCart = async () => {
     try {
       const response = await fetch(
@@ -97,12 +123,24 @@ const ProductDetail = ({ productId }) => {
           <div className="col-md-9">
             <div className="d-flex">
               <div className="image-section" style={{ flex: 3 }}>
-                <img
-                  src={`/images/${product.imageUrl}`}
-                  alt={product.title}
-                  className="product-image"
-                  style={{ width: "100%", height: "auto", maxHeight: "400px" }}
-                />
+                {images.length > 0 ? (
+                  images.map((image) => (
+                    <img
+                      key={image.imageId}
+                      src={`/images/${image.imageName}`}
+                      alt={product.title}
+                      className="product-image"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxHeight: "400px",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <p>Không có ảnh cho sản phẩm này.</p>
+                )}
+
                 <div className="small-images mt-2 d-flex justify-content-between">
                   <img
                     src="https://via.placeholder.com/100"
@@ -227,15 +265,33 @@ const ProductDetail = ({ productId }) => {
           <hr />
           <Row xs={1} md={5} className="g-4">
             {similarProducts.map((similarProduct) => (
-              <Col key={similarProduct.id}>
-                <Card>
-                  <Card.Img
-                    src={`/images/${similarProduct.imageUrl}`}
-                    alt={similarProduct.title}
-                  />
+              <Col key={similarProduct.productId}>
+                <Card
+                  onClick={() => handleProductClick(similarProduct.productId)} // Sử dụng similarProduct.id
+                  style={{ cursor: "pointer" }}
+                >
+                  {images.length > 0 ? (
+                    images.map((image) => (
+                      <Card.Img
+                        key={image.imageId}
+                        src={`/images/${image.imageName}`} // Đường dẫn đến ảnh
+                        alt={product.title}
+                        className="product-image"
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          maxHeight: "400px",
+                        }}
+                      />
+                    ))
+                  ) : (
+                    <Card.Body>
+                      <p>Không có ảnh cho sản phẩm này.</p>
+                    </Card.Body>
+                  )}
 
                   <Card.Body>
-                    <Card.Title>{similarProduct.title}</Card.Title>
+                    <Card.Title>{similarProduct.productName}</Card.Title>
                     <Card.Text>
                       <span className="price">Giá: {similarProduct.price}</span>{" "}
                       <br />

@@ -3,41 +3,72 @@ import { cartService } from "../../../services/cartService"; // Import dịch v�
 import { useNavigate } from "react-router-dom";
 import "../../css/cart.css";
 import { showErrorToast } from "../../../utils/Toast";
-
+import axios from "axios";
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const userId = 1; // Gán cứng userId là 1
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [images, setProductImages] = useState([]);
+  const fetchCartItems = async () => {
+    if (!userId) {
+      console.error("userId không xác định");
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/pet/cart/view/${userId}`
+      );
+      console.log("Dữ liệu trả về từ API:", response.data);
+      const { cartItems, totalPrice } = response.data;
+      // Kiểm tra nếu cartItems là một mảng
+      if (Array.isArray(cartItems)) {
+        setCartItems(cartItems);
+        setTotalPrice(totalPrice);
+        // Lấy ảnh cho từng sản phẩm
+        const productImagePromises = cartItems.map(async (item) => {
+          if (item.products && item.products.length > 0) {
+            const productId = item.products[0].productId;
+            return fetchProductImages(productId);
+          } else {
+            console.warn("Không có sản phẩm nào cho cartItem:", item);
+            return [];
+          }
+        });
+        // Lấy hình ảnh và kết hợp thành một mảng duy nhất
+        const images = await Promise.all(productImagePromises);
+        const flatImages = images.flat();
+        setProductImages(flatImages);
+      } else {
+        console.error("cartItems không phải là một mảng:", cartItems);
+        setCartItems([]);
+      }
+    } catch (error) {
+      console.error("Lỗi khi lấy giỏ hàng:", error);
+    }
+  };
+
+  const fetchProductImages = async (productId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/home/products/${productId}/images`
+      );
+      if (Array.isArray(response.data) && response.data.length > 0) {
+        return response.data;
+      } else {
+        console.warn(`Không có hình ảnh cho sản phẩm ${productId}.`);
+        return []; // Trả về mảng rỗng nếu không có hình ảnh
+      }
+    } catch (error) {
+      console.error(`Lỗi khi lấy ảnh cho sản phẩm ${productId}:`, error);
+      return []; // Trả về mảng rỗng nếu có lỗi
+    }
+  };
 
   useEffect(() => {
     fetchCartItems();
-  }, []); // Không cần phụ thuộc vào user
-
-  const fetchCartItems = async () => {
-    try {
-      const response = await cartService.getCartItems(userId);
-      console.log("Dữ liệu trả về từ API:", response); // In ra dữ liệu trả về
-      // Kiểm tra xem response.cartItems có phải là một mảng không
-      if (Array.isArray(response.cartItems)) {
-        setCartItems(response.cartItems); // Lưu trữ mảng sản phẩm vào state
-        // Khởi tạo selectedItems để chứa tất cả cartItemId
-        const initialSelectedItems = response.cartItems.map(
-          (item) => item.cartItemId
-        );
-        setSelectedItems(initialSelectedItems);
-      } else {
-        console.error(
-          "Dữ liệu trả về không phải là một mảng:",
-          response.cartItems
-        );
-        setCartItems([]); // Đặt giỏ hàng rỗng nếu dữ liệu không hợp lệ
-      }
-    } catch (error) {
-      console.error("Error fetching cart items:", error);
-    }
-  };
+  }, []);
 
   const handleCheckboxChange = (cartItemId) => {
     setSelectedItems((prevItems) => {
@@ -169,81 +200,80 @@ const Cart = () => {
                           }
                         />
                       </td>
-                      {cartItem.products.map((product) => (
-                        <React.Fragment key={product.imageId}>
-                          <td>
-                            <img
-                              src={`/images/${product.imageUrl}`}
-                              alt={product.productName}
-                              style={{ width: "80px", height: "80px" }}
-                            />
-                          </td>
-                          <td>{product.productName}</td>
-                          <td>
-                            <button
-                              type="button"
-                              className="btn btn-secondary btn-sm"
-                              onClick={() =>
-                                decrementValue(cartItem.cartItemId)
-                              }
-                            >
-                              -
-                            </button>
-                            <input
-                              style={{ width: "30px" }}
-                              value={cartItem.quantity}
-                              readOnly
-                            />
-                            <button
-                              type="button"
-                              className="btn btn-secondary btn-sm"
-                              onClick={() =>
-                                incrementValue(cartItem.cartItemId)
-                              }
-                            >
-                              +
-                            </button>
-                          </td>
-                          <td>
-                            <b>
-                              {(() => {
-                                const discountedPrice =
-                                  product.price -
-                                  (product.price * product.priceDecreased) /
-                                    100;
-                                return (
-                                  discountedPrice * cartItem.quantity + " VNĐ"
-                                );
-                              })()}
-                            </b>
-                          </td>
+                      {cartItem.products.map((product) => {
+                        // Lấy hình ảnh cho sản phẩm theo productId
+                        const productImages = images.filter(
+                          (image) => image.productId === product.productId
+                        );
+                        console.log(images); // Kiểm tra giá trị của images
 
-                          <td>
-                            <b>
-                              {(() => {
-                                const discountedPrice =
-                                  product.price -
-                                  (product.price * product.priceDecreased) /
-                                    100;
-                                return (
-                                  discountedPrice * cartItem.quantity + " VNĐ"
-                                );
-                              })()}
-                            </b>
-                          </td>
-
-                          <td>
-                            <button
-                              onClick={() =>
-                                removeCartItem(cartItem.cartItemId)
-                              }
-                              className="btn btn-danger btn-sm"
-                            >
-                              <i className="fa-solid fa-trash"></i>
-                            </button>
-                          </td>
-                        </React.Fragment>
-                      ))}
+                        return (
+                          <React.Fragment key={product.imageId}>
+                            <td>
+                              {productImages.length > 0 ? (
+                                <img
+                                  key={productImages[0].imageId} // Lấy hình ảnh đầu tiên cho sản phẩm
+                                  src={`/images/${productImages[0].imageName}`} // Đường dẫn đến hình ảnh
+                                  alt={product.productName} // Mô tả hình ảnh
+                                  className="product-image"
+                                  style={{ width: "80px", height: "80px" }}
+                                />
+                              ) : (
+                                <p>Không có ảnh cho sản phẩm này.</p>
+                              )}
+                            </td>
+                            <td>{product.productName}</td>
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-secondary btn-sm"
+                                onClick={() =>
+                                  decrementValue(cartItem.cartItemId)
+                                }
+                              >
+                                -
+                              </button>
+                              <input
+                                style={{ width: "30px" }}
+                                value={cartItem.quantity}
+                                readOnly
+                              />
+                              <button
+                                type="button"
+                                className="btn btn-secondary btn-sm"
+                                onClick={() =>
+                                  incrementValue(cartItem.cartItemId)
+                                }
+                              >
+                                +
+                              </button>
+                            </td>
+                            <td>
+                              <b>
+                                {(() => {
+                                  const discountedPrice =
+                                    product.price -
+                                    (product.price * product.priceDecreased) /
+                                      100;
+                                  return (
+                                    discountedPrice * cartItem.quantity + " VNĐ"
+                                  );
+                                })()}
+                              </b>
+                            </td>
+                            <td>
+                              <button
+                                onClick={() =>
+                                  removeCartItem(cartItem.cartItemId)
+                                }
+                                className="btn btn-danger btn-sm"
+                              >
+                                <i className="fa-solid fa-trash"></i>
+                              </button>
+                            </td>
+                          </React.Fragment>
+                        );
+                      })}
                     </tr>
                   ))}
                 </tbody>

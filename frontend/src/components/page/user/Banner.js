@@ -172,6 +172,8 @@ function Banner() {
 
   return (
     <>
+      <br />
+      <br />
       {/* Carousel */}
       <Carousel>
         <Carousel.Item interval={1000}>
