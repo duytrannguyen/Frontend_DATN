@@ -1,16 +1,29 @@
 import React from "react";
+import { TOKEN } from "../../../constant/APIConstant";
 
 function Header() {
+  const logout = () => {
+    // Xóa token và thông tin người dùng đã lưu trong localStorage
+    localStorage.removeItem(TOKEN);
+    localStorage.removeItem("userInfo");
+
+    // Chuyển hướng người dùng về trang đăng nhập
+    window.location.href = "http://localhost:3000/Login";
+  };
+
   return (
     <header>
-      <div className="container py-2">
-        <div className="col-sm-12 col-lg-12 d-flex justify-content-between align-items-center">
-          <div className="main-logo">
-            <a href="/ProductManagement">Kênh người bán</a>
-            <a href="index.html">Trở thành người bán</a>
+      <div className="container-fluid py-2">
+        <div className="row justify-content-between align-items-center">
+          <div className="col-sm-12 col-lg-6 d-flex justify-content-start">
+            <div className="main-logo">
+              <a href="/Register_Seller" className="me-3">
+                Trở thành người bán
+              </a>
+            </div>
           </div>
 
-          <div className="account-options ml-auto">
+          <div className="col-sm-12 col-lg-6 d-flex justify-content-end align-items-center">
             <a href="index.html" className="me-3">
               Thông báo
             </a>
@@ -19,20 +32,29 @@ function Header() {
             </a>
 
             <div className="custom-select-wrapper me-3">
-              <select className="filter-categoriess">
-                <option>Tiếng việt</option>
+              <select className="form-select">
+                <option>Tiếng Việt</option>
                 <option>English</option>
               </select>
             </div>
 
-            <a href="index.html" className="me-3">
+            <a href="/Login" className="me-3">
               Đăng nhập
             </a>
-            <a href="index.html">Đăng ký</a>
+            <a href="/Register" className="me-3">
+              Đăng ký
+            </a>
+            <li
+              onClick={logout}
+              className="nav-link"
+              style={{ cursor: "pointer" }}
+            >
+              Đăng xuất
+            </li>
           </div>
         </div>
 
-        <div className="row py-4 pb-0 pb-sm-4 align-items-center">
+        <div className="row py-4 align-items-center">
           <div className="col-sm-4 col-lg-3 text-center text-sm-start">
             <div className="main-logo">
               <a href="index.html">
@@ -41,11 +63,11 @@ function Header() {
             </div>
           </div>
 
-          <div className="col-sm-8 offset-sm-2 offset-md-0 col-lg-7 d-none d-lg-block">
-            <div className="search-bar border rounded-2 px-0 border-dark-subtle">
+          <div className="col-sm-8 col-lg-7">
+            <div className="search-bar border rounded-2 px-0">
               <form
                 id="search-form"
-                className="text-center d-flex align-items-center w-100 position-relative"
+                className="d-flex align-items-center w-100 position-relative"
                 action=""
                 method=""
               >
@@ -53,38 +75,35 @@ function Header() {
                   type="text"
                   className="form-control"
                   placeholder="Search products"
-                  style={{ paddingRight: "40px" }} // Tạo khoảng cách bên phải cho icon
+                  style={{ paddingRight: "40px" }}
                 />
                 <button
                   type="submit"
-                  className="btn position-absolute search-button"
+                  className="btn btn-pink position-absolute"
                   style={{
                     left: "91%",
-                    backgroundColor: "#ff69b4", // Màu hồng cho nút
-                    color: "white", // Màu chữ/icon là trắng
-                    width: "64px", // Chiều rộng của nút
-                    height: "35px", // Chiều cao của nút
-                    border: "none", // Xóa viền
-                    borderRadius: "5px", // Bo góc nút
+                    backgroundColor: "#ff69b4",
+                    color: "white",
+                    width: "64px",
+                    height: "35px",
+                    border: "none",
+                    borderRadius: "5px",
                   }}
                 >
                   <i
                     className="bi bi-search"
                     style={{ fontSize: "16px", color: "white" }}
-                  ></i>{" "}
-                  {/* Icon tìm kiếm màu trắng */}
+                  ></i>
                 </button>
               </form>
             </div>
           </div>
 
-          <div className="col-sm-8 col-lg-2 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
+          <div className="col-sm-8 col-lg-2 d-flex justify-content-end align-items-center mt-4 mt-sm-0">
             <ul className="d-flex justify-content-end list-unstyled m-0">
               <li>
-                <a href="index.html" className="mx-3">
-                  <span className="fs-4">
-                    <iconify-icon icon="mdi:heart" class="fs-4"></iconify-icon>
-                  </span>
+                <a href="index.html" className="mx-3 fs-4">
+                  <iconify-icon icon="mdi:heart"></iconify-icon>
                 </a>
               </li>
               <li>
@@ -96,136 +115,67 @@ function Header() {
                   aria-controls="offcanvasCart"
                 >
                   <span className="fs-4 position-relative">
-                    <iconify-icon
-                      icon="mdi:cart"
-                      class="fs-4 position-relative"
-                    ></iconify-icon>
-                  </span>
-                  <span className="position-absolute translate-middle badge rounded-circle bg-danger pt-2">
-                    3
+                    <iconify-icon icon="mdi:cart"></iconify-icon>
+                    <span className="position-absolute translate-middle badge rounded-circle bg-danger pt-2">
+                      3
+                    </span>
                   </span>
                 </a>
               </li>
             </ul>
           </div>
+        </div>
 
-          <div className="container">
-            <nav className="main-menu d-flex navbar navbar-expand-lg justify-content-between">
-              <div className="d-flex d-lg-none align-items-end mt-3">
-                <ul className="d-flex justify-content-end list-unstyled m-0">
-                  <li>
-                    <a href="account.html" className="mx-3">
-                      <span className="fs-4">👤</span>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container-fluid">
+            <div className="row w-100">
+              <div className="col-3 mb-3">
+                <select className="form-select" aria-label="Danh mục sản phẩm">
+                  <option defaultValue>DANH MỤC SẢN PHẨM</option>
+                  <option>Trang phục</option>
+                  <option>Thức ăn</option>
+                  <option>Phụ kiện</option>
+                  <option>Thú cưng</option>
+                </select>
+              </div>
+
+              <div className="col-9">
+                <ul className="navbar-nav d-flex flex-row flex-wrap list-unstyled m-0">
+                  <li className="nav-item">
+                    <a href="/dashboardUser" className="nav-link">
+                      Trang chủ
                     </a>
                   </li>
-                  <li>
-                    <a href="wishlist.html" className="mx-3">
-                      <span className="fs-4">❤️</span>
+                  <li className="nav-item">
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho cún
                     </a>
                   </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="mx-3"
-                      data-bs-toggle="offcanvas"
-                      data-bs-target="#offcanvasCart"
-                      aria-controls="offcanvasCart"
-                    >
-                      <span className="fs-4 position-relative">🛒</span>
-                      <span className="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
-                        03
-                      </span>
+                  <li className="nav-item">
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho mèo
                     </a>
                   </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="mx-3"
-                      data-bs-toggle="offcanvas"
-                      data-bs-target="#offcanvasSearch"
-                      aria-controls="offcanvasSearch"
-                    >
-                      <span className="fs-4">🔍</span>
+                  <li className="nav-item">
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho chuột hamster
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho thỏ
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho chim vẹt
                     </a>
                   </li>
                 </ul>
               </div>
-
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-
-              <div
-                className="offcanvas offcanvas-end"
-                tabIndex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
-              >
-                <div className="offcanvas-header justify-content-center">
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
-                  ></button>
-                </div>
-
-                <div className="offcanvas-body d-flex justify-content-start">
-                  <select className="filter-categories border-0 mb-0 me-5 fw-bold">
-                    <option>DANH MỤC SẢN PHẨM</option>
-                    <option>Trang phục</option>
-                    <option>Thức ăn</option>
-                    <option>Phụ kiên</option>
-                    <option>Thú cưng</option>
-                  </select>
-
-                  <ul className="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
-                    <li className="nav-item">
-                      <a href="/" className="nav-link active">
-                        Trang chủ
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a href="/Product" className="nav-link active">
-                        Cửa hàng cho cún
-                      </a>
-                    </li>
-
-                    <li className="nav-item">
-                      <a href="/Product" className="nav-link active">
-                        Cửa hàng cho mèo
-                      </a>
-                    </li>
-
-                    <li className="nav-item">
-                      <a href="/Product" className="nav-link active">
-                        Cửa hàng cho chuột hamster
-                      </a>
-                    </li>
-
-                    <li className="nav-item">
-                      <a href="/Product" className="nav-link active">
-                        Cửa hàng cho thỏ
-                      </a>
-                    </li>
-
-                    <li className="nav-item">
-                      <a href="/Product" className="nav-link active">
-                        Của hàng cho chim vẹt
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
+            </div>
           </div>
-        </div>
+        </nav>
       </div>
     </header>
   );

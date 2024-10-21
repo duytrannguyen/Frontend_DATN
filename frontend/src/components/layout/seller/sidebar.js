@@ -32,9 +32,9 @@ const Sidebar = () => {
           <ul
             className={`nav-content collapse ${isComponentsOpen ? "show" : ""}`}
           >
-            {["Alerts"].map((item) => (
+            {["Danh sách sản phẩm"].map((item) => (
               <li key={item}>
-                <Link to={`components-${item.toLowerCase()}`}>
+                <Link to="/seller/ProductManagement">
                   <i className="bi bi-circle"></i>
                   <span>{item}</span>
                 </Link>

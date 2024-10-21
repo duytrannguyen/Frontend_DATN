@@ -1,0 +1,7 @@
+- Lệnh chạy : npm start
+- Cày thư viện cho thư mục frontend : 
+        + npm install
+        + npm install axios bootstrap bootstrap-icons react react-bootstrap react-bootstrap-icons react-dom react-paginate react-router-dom react-scripts sass web-vitals antd moment prop-types
+        + npm install @headlessui/react
+
+

@@ -2,39 +2,40 @@ import React, { useState } from "react";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../css/pay.css";
 
-const CheckoutForm = () => {
-  // Gán cứng dữ liệu người dùng và giỏ hàng
-  const user = {
-    fullName: "Nguyễn Văn A",
-    email: "nguyenvana@example.com",
-    phone: "0123456789"
-  };
+// const CheckoutForm = () => {
+//   // Gán cứng dữ liệu người dùng và giỏ hàng
+//   const user = {
+//     fullName: "Nguyễn Văn A",
+//     email: "nguyenvana@example.com",
+//     phone: "0123456789"
+//   };
 
-  const cartItems = [
-    {
-      productId: {
-        imageId: { imageName: "product1.jpg" },
-        productName: "Sản phẩm 1",
-        price: 100000,
-        discountPercentage: 10
-      },
-      quantity: 2
-    },
-    {
-      productId: {
-        imageId: { imageName: "product2.jpg" },
-        productName: "Sản phẩm 2",
-        price: 200000,
-        discountPercentage: 0
-      },
-      quantity: 1
-    }
-  ];
+//   const cartItems = [
+//     {
+//       productId: {
+//         imageId: { imageName: "product1.jpg" },
+//         productName: "Sản phẩm 1",
+//         price: 100000,
+//         discountPercentage: 10
+//       },
+//       quantity: 2
+//     },
+//     {
+//       productId: {
+//         imageId: { imageName: "product2.jpg" },
+//         productName: "Sản phẩm 2",
+//         price: 200000,
+//         discountPercentage: 0
+//       },
+//       quantity: 1
+//     }
+//   ];
 
-  const total = 200000; // Gán tổng tiền
-  const discountAmount = 10000; // Gán số tiền khuyến mãi
-  const status = "active"; // Gán trạng thái đơn hàng
+const total = 200000; // Gán tổng tiền
+const discountAmount = 10000; // Gán số tiền khuyến mãi
+const status = "active"; // Gán trạng thái đơn hàng
 
+const CheckoutForm = ({ user, cartItems, total, discountAmount, status }) => {
   const [formData, setFormData] = useState({
     fullName: user.fullName || "",
     email: user.email || "",
@@ -257,7 +258,8 @@ const CheckoutForm = () => {
                     <p>
                       {item.productId.price -
                         (item.productId.price *
-                          item.productId.discountPercentage) / 100}{" "}
+                          item.productId.discountPercentage) /
+                          100}{" "}
                       VNĐ
                     </p>
                     <p className="giaGiam text-body-tertiary">
@@ -269,45 +271,61 @@ const CheckoutForm = () => {
               <hr />
             </div>
           </div>
+        </div>
 
+        <div className="footer">
           <div className="card">
             <div className="container">
               <div className="row">
                 <div className="col-md-6"></div>
                 <div className="col-md-3">
-                  <h5>Tổng cộng</h5>
+                  <p className="text-end">Thành tiền</p>
+                  <p className="text-end">Khuyến mãi</p>
+                  <p className="text-end">
+                    Phí vận chuyển (Giao hàng tiêu chuẩn)
+                  </p>
+                  <p className="text-end fw-bold">Tổng tiền (gồm VAT)</p>
                 </div>
-                <div className="col-md-3">
-                  <h5>{total} VNĐ</h5>
+                <div className="col-md-2">
+                  <p className="text-end">{total || 0} VNĐ</p>
+                  <p className="text-end">{discountAmount || 0} VNĐ</p>
+                  <p className="text-end">32.000 VNĐ</p>
+                  <p className="text-end text-primary fw-bold">
+                    {total - discountAmount + 32000} VNĐ
+                  </p>
                 </div>
               </div>
+
               <div className="row">
-                <div className="col-md-6"></div>
-                <div className="col-md-3">
-                  <h5>Số tiền khuyến mãi</h5>
+                <div className="col-md-7">
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="agreeTerms"
+                      checked={formData.agreeTerms}
+                      onChange={handleCheckboxChange}
+                      required
+                    />
+                    <label className="form-check-label">
+                      Tôi đã kiểm tra lại đơn hàng và đồng ý với điều khoản sử
+                      dụng
+                    </label>
+                  </div>
                 </div>
                 <div className="col-md-3">
-                  <h5>{discountAmount} VNĐ</h5>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-6"></div>
-                <div className="col-md-3">
-                  <h5>Trạng thái</h5>
-                </div>
-                <div className="col-md-3">
-                  <h5>{status}</h5>
+                  <button
+                    type="submit"
+                    className={`btn btn-warning text-center col-md-12 ${
+                      status === "empty" ? "disabled" : ""
+                    }`}
+                  >
+                    Xác nhận đặt hàng
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-
-          <div className="d-grid gap-2 mt-3">
-            <button type="submit" className="btn btn-primary">
-              Đặt hàng
-            </button>
-          </div>
-
         </div>
       </div>
     </form>
