@@ -10,6 +10,8 @@ import "./components/css/ProductManagement.css";
 import User_Router from "./router/User_Router";
 import Seller_Router from "./router/Seller_Router";
 import Loader from "./utils/Loading";
+import Headers from "./components/layout/user/Header";
+import Footer from "./components/layout/user/Footer";
 
 const App = () => {
   const [loading, setLoading] = useState(true); // Trạng thái loading
@@ -29,13 +31,17 @@ const App = () => {
 
   return (
     <>
+      <Headers />
       <ToastContainer />
+      <br />
+      <br />
       <Routes>
         {/* Định tuyến cho giao diện Admin */}
         <Route path="/seller/*" element={<Seller_Router />} />
         {/* Định tuyến cho giao diện User */}
         <Route path="/*" element={<User_Router />} />
       </Routes>
+      <Footer />
     </>
   );
 };
