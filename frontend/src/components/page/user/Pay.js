@@ -338,7 +338,7 @@ const CheckoutForm = () => {
                   </p>
                   <p className="text-end">32.000 VNĐ</p>
                   <p className="text-end text-primary fw-bold">
-                    {total.toLocaleString()} VNĐ
+                    {(total + 32000).toLocaleString()} VNĐ
                   </p>
                 </div>
                 <div className="col-md-1"></div>
