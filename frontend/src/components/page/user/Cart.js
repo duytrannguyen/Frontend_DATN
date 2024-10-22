@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { cartService } from "../../../services/cartService"; // Import dịch vụ
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../../css/cart.css";
 import { showErrorToast } from "../../../utils/Toast";
 import axios from "axios";
+
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
@@ -11,6 +12,10 @@ const Cart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [images, setProductImages] = useState([]);
+  const location = useLocation();
+  // const { selectedItems: preSelectedItems } = location.state || {}; // Nhận các mục đã chọn từ trang trước (nếu có)
+
+  // Fetch dữ liệu giỏ hàng
   const fetchCartItems = async () => {
     if (!userId) {
       console.error("userId không xác định");
@@ -20,28 +25,21 @@ const Cart = () => {
       const response = await axios.get(
         `http://localhost:8080/api/pet/cart/view/${userId}`
       );
-      console.log("Dữ liệu trả về từ API:", response.data);
-      const { cartItems, totalPrice } = response.data;
-      // Kiểm tra nếu cartItems là một mảng
+      const { cartItems } = response.data;
       if (Array.isArray(cartItems)) {
         setCartItems(cartItems);
-        setTotalPrice(totalPrice);
-        // Lấy ảnh cho từng sản phẩm
+        // Fetch ảnh sản phẩm
         const productImagePromises = cartItems.map(async (item) => {
           if (item.products && item.products.length > 0) {
             const productId = item.products[0].productId;
             return fetchProductImages(productId);
-          } else {
-            console.warn("Không có sản phẩm nào cho cartItem:", item);
-            return [];
           }
+          return [];
         });
-        // Lấy hình ảnh và kết hợp thành một mảng duy nhất
+
         const images = await Promise.all(productImagePromises);
-        const flatImages = images.flat();
-        setProductImages(flatImages);
+        setProductImages(images.flat());
       } else {
-        console.error("cartItems không phải là một mảng:", cartItems);
         setCartItems([]);
       }
     } catch (error) {
@@ -49,20 +47,15 @@ const Cart = () => {
     }
   };
 
+  // Fetch ảnh sản phẩm
   const fetchProductImages = async (productId) => {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/home/products/${productId}/images`
       );
-      if (Array.isArray(response.data) && response.data.length > 0) {
-        return response.data;
-      } else {
-        console.warn(`Không có hình ảnh cho sản phẩm ${productId}.`);
-        return []; // Trả về mảng rỗng nếu không có hình ảnh
-      }
+      return response.data.length > 0 ? response.data : [];
     } catch (error) {
-      console.error(`Lỗi khi lấy ảnh cho sản phẩm ${productId}:`, error);
-      return []; // Trả về mảng rỗng nếu có lỗi
+      return [];
     }
   };
 
@@ -70,93 +63,91 @@ const Cart = () => {
     fetchCartItems();
   }, []);
 
+  // Tính tổng tiền
+  const calculateTotal = (selectedItems) => {
+    let total = 0;
+    cartItems.forEach((cartItem) => {
+      if (selectedItems.includes(cartItem.cartItemId)) {
+        cartItem.products.forEach((product) => {
+          const discountedPrice =
+            product.price - (product.price * product.percentDecrease) / 100;
+          total += discountedPrice * cartItem.quantity;
+        });
+      }
+    });
+    setTotalPrice(total);
+  };
+
+  // Chọn/bỏ chọn từng sản phẩm
   const handleCheckboxChange = (cartItemId) => {
     setSelectedItems((prevItems) => {
       const newSelectedItems = prevItems.includes(cartItemId)
-        ? prevItems.filter((id) => id !== cartItemId) // Bỏ chọn sản phẩm
-        : [...prevItems, cartItemId]; // Chọn sản phẩm
-
-      // Tính tổng giá trị sau khi cập nhật selectedItems
+        ? prevItems.filter((id) => id !== cartItemId)
+        : [...prevItems, cartItemId];
       calculateTotal(newSelectedItems);
       return newSelectedItems;
     });
   };
-  // Hàm để xử lý checkbox "Tất cả"
+
+  // Chọn tất cả
   const handleSelectAll = (checked) => {
     const allItemIds = cartItems.map((item) => item.cartItemId);
     setSelectedItems(checked ? allItemIds : []);
-    calculateTotal(checked ? allItemIds : []); // Tính tổng khi chọn hoặc bỏ chọn tất cả
-  };
-  const calculateTotal = (selectedItems) => {
-    let total = 0;
-    // Lặp qua từng sản phẩm trong giỏ hàng
-    cartItems.forEach((cartItem) => {
-      // Kiểm tra xem sản phẩm có được chọn không
-      if (selectedItems.includes(cartItem.cartItemId)) {
-        // Duyệt qua các sản phẩm trong từng cartItem
-        cartItem.products.forEach((product) => {
-          const price = product.price; // Giá sản phẩm
-          const percentDecrease = product.percentDecrease; // Phần trăm giảm giá
-          const quantity = cartItem.quantity; // Số lượng sản phẩm trong giỏ hàng
-          // Tính giá đã giảm và cộng vào tổng
-          const discountedPrice = price - (price * percentDecrease) / 100;
-          total += discountedPrice * quantity; // Cộng vào tổng
-        });
-      }
-    });
-    setTotalPrice(total); // Cập nhật totalPrice
+    calculateTotal(checked ? allItemIds : []);
   };
 
+  // Tăng số lượng sản phẩm
   const incrementValue = async (cartItemId) => {
     const item = cartItems.find((item) => item.cartItemId === cartItemId);
     if (item) {
-      const updatedQuantity = item.quantity + 1;
-      await updateCartItem(cartItemId, updatedQuantity);
+      await updateCartItem(cartItemId, item.quantity + 1);
     }
   };
 
+  // Giảm số lượng sản phẩm
   const decrementValue = async (cartItemId) => {
     const item = cartItems.find((item) => item.cartItemId === cartItemId);
     if (item && item.quantity > 1) {
-      const updatedQuantity = item.quantity - 1;
-      await updateCartItem(cartItemId, updatedQuantity);
+      await updateCartItem(cartItemId, item.quantity - 1);
     }
   };
 
+  // Cập nhật sản phẩm trong giỏ hàng
   const updateCartItem = async (cartItemId, quantity) => {
     try {
-      // Lấy sản phẩm từ giỏ hàng
       const item = cartItems.find((item) => item.cartItemId === cartItemId);
-      // Kiểm tra xem sản phẩm có tồn tại không
-      if (!item) {
-        throw new Error("Sản phẩm không tồn tại trong giỏ hàng");
-      }
-      const itemData = {
-        ...item,
-        quantity: quantity, // Cập nhật số lượng
-        user: { usersId: 1 },
-      };
-      // Gọi dịch vụ để cập nhật giỏ hàng
+      const itemData = { ...item, quantity, user: { usersId: 1 } };
       await cartService.updateCartItem(cartItemId, itemData);
-      fetchCartItems(); // Tải lại giỏ hàng
+      fetchCartItems(); // Reload giỏ hàng sau khi cập nhật
     } catch (error) {
       showErrorToast("Cập nhật thất bại");
-      console.error("Error updating cart item:", error);
     }
   };
 
-  //xoá
+  // Xóa sản phẩm
   const removeCartItem = async (cartItemId) => {
     try {
-      await cartService.removeCartItem(cartItemId); // Sử dụng dịch vụ
-      fetchCartItems(); // Tải lại giỏ hàng
+      await cartService.removeCartItem(cartItemId);
+      fetchCartItems();
     } catch (error) {
       console.error("Error removing cart item:", error);
     }
   };
 
+  // Xử lý thanh toán
   const proceedToPayment = () => {
-    navigate("/Pay");
+    if (selectedItems.length === 0) {
+      showErrorToast("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+      return;
+    }
+    // Lấy danh sách cartItem tương ứng với selectedItems
+    const selectedCartItems = cartItems.filter((cartItem) =>
+      selectedItems.includes(cartItem.cartItemId)
+    );
+    console.log("Location State:", location.state);
+    console.log("Các sản phẩm đã chọn:", selectedItems); // In ra các sản phẩm đã chọn
+    // Gửi danh sách các cartItem đã chọn đến trang thanh toán
+    navigate("/Pay", { state: { selectedCartItems } });
   };
 
   return (
@@ -164,7 +155,6 @@ const Cart = () => {
       {cartItems.length > 0 ? (
         <div className="row">
           <div className="col-md-9">
-            <br />
             <div className="card card">
               <table className="table">
                 <thead>
@@ -177,7 +167,7 @@ const Cart = () => {
                           cartItems.length > 0
                         }
                         onChange={(e) => handleSelectAll(e.target.checked)}
-                      />{" "}
+                      />
                       Tất cả
                     </th>
                     <th>Hình ảnh</th>
@@ -201,20 +191,16 @@ const Cart = () => {
                         />
                       </td>
                       {cartItem.products.map((product) => {
-                        // Lấy hình ảnh cho sản phẩm theo productId
                         const productImages = images.filter(
                           (image) => image.productId === product.productId
                         );
-                        console.log(images); // Kiểm tra giá trị của images
-
                         return (
                           <React.Fragment key={product.imageId}>
                             <td>
                               {productImages.length > 0 ? (
                                 <img
-                                  key={productImages[0].imageId} // Lấy hình ảnh đầu tiên cho sản phẩm
-                                  src={`/images/${productImages[0].imageName}`} // Đường dẫn đến hình ảnh
-                                  alt={product.productName} // Mô tả hình ảnh
+                                  src={`/images/${productImages[0].imageName}`}
+                                  alt={product.productName}
                                   className="product-image"
                                   style={{ width: "80px", height: "80px" }}
                                 />
@@ -250,15 +236,11 @@ const Cart = () => {
                             </td>
                             <td>
                               <b>
-                                {(() => {
-                                  const discountedPrice =
-                                    product.price -
-                                    (product.price * product.priceDecreased) /
-                                      100;
-                                  return (
-                                    discountedPrice * cartItem.quantity + " VNĐ"
-                                  );
-                                })()}
+                                {(product.price -
+                                  (product.price * product.percentDecrease) /
+                                    100) *
+                                  cartItem.quantity}{" "}
+                                VNĐ
                               </b>
                             </td>
                             <td>
@@ -281,14 +263,10 @@ const Cart = () => {
             </div>
           </div>
           <div className="col-md-3">
-            <br />
             <div className="card">
               <div className="row">
                 <div className="col-md-9">
-                  Thành tiền:{" "}
-                  <b>
-                    <h6>{totalPrice} VNĐ</h6>
-                  </b>
+                  Thành tiền: <b>{totalPrice} VNĐ</b>
                 </div>
               </div>
               <hr />
@@ -307,12 +285,14 @@ const Cart = () => {
               className="btn btn-outline-primary"
               onClick={proceedToPayment}
             >
-              Thanh Toán
+              Tiến Hành Thanh Toán
             </button>
           </div>
         </div>
       ) : (
-        <div className="alert alert-info mt-3">Giỏ hàng trống</div>
+        <div className="empty-cart">
+          <h4>Giỏ hàng của bạn đang trống.</h4>
+        </div>
       )}
     </div>
   );

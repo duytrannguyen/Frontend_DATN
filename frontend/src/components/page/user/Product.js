@@ -3,6 +3,9 @@ import Carousel from "react-bootstrap/Carousel";
 import { Card, Row, Col } from "react-bootstrap";
 import Pagination from "react-bootstrap/Pagination";
 import axios from "axios";
+import { showToast, showErrorToast } from "../../../utils/Toast";
+import { useParams } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom"; // Sử dụng useNavigate
 const Product = () => {
   const [isPriceOpen, setIsPriceOpen] = useState(false);
@@ -12,6 +15,8 @@ const Product = () => {
   const itemsPerPage = 10; // Số lượng sản phẩm mỗi trang
   const [productImages, setProductImages] = useState({});
   const [products, setProducts] = useState([]); // State cho danh sách sản phẩm
+  const [quantity, setQuantity] = useState(1);
+  const { productId } = useParams(); // Lấy productId từ URL
 
   const togglePriceFilter = () => setIsPriceOpen(!isPriceOpen);
   const toggleCategoryFilter = () => setIsCategoryOpen(!isCategoryOpen);
@@ -71,6 +76,33 @@ const Product = () => {
     // Chuyển hướng đến trang chi tiết sản phẩm
     navigate(`/product/${productId}`);
   };
+
+  const handleAddToCart = async (productId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/pet/cart/add/${productId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: { usersId: 1 }, // Thay thế user ID theo yêu cầu của bạn
+            quantity: quantity, // Có thể thay đổi số lượng nếu cần
+          }),
+        }
+      );
+
+      if (response.ok) {
+        showToast("Thêm vào giỏ hàng thành công!"); // Gọi hàm hiển thị thông báo thành công
+      } else {
+        showErrorToast("Lỗi khi thêm sản phẩm vào giỏ hàng"); // Gọi hàm hiển thị thông báo lỗi
+      }
+    } catch (error) {
+      showErrorToast(`Có lỗi xảy ra: ${error.message}`); // Gọi hàm hiển thị thông báo lỗi
+    }
+  };
+
   // Thành phần bộ lọc giá
   const PriceFilter = ({ isOpen, toggleFilter }) => (
     <Card className="price-filter-card">
@@ -302,13 +334,13 @@ const Product = () => {
               <Row xs={1} md={5} className="g-4">
                 {currentProducts.map((product) => (
                   <Col key={product.productId}>
-                    <Card
-                      onClick={() => navigate(`/Product/${product.productId}`)}
-                      style={{ cursor: "pointer" }}
-                    >
+                    <Card style={{ cursor: "pointer" }}>
                       {productImages[product.productId] &&
                       productImages[product.productId].length > 0 ? (
                         <Card.Img
+                          onClick={() =>
+                            navigate(`/Product/${product.productId}`)
+                          }
                           src={`/images/${
                             productImages[product.productId][0].imageName
                           }`}
@@ -325,20 +357,22 @@ const Product = () => {
                           <p>Không có ảnh cho sản phẩm này.</p>
                         </Card.Body>
                       )}
-                      <Card.Body>
-                        <a
-                          href={`/Product/${product.productId}`}
-                          className="title"
-                        >
-                          <Card.Title>{product.productName}</Card.Title>
-                        </a>
+                      <Card.Body
+                        onClick={() =>
+                          navigate(`/Product/${product.productId}`)
+                        }
+                      >
+                        <Card.Title>{product.productName}</Card.Title>
                         <Card.Text>
-                          <span className="price">Giá: {product.price}</span>
+                          <span className="price">Giá: {product.price}₫</span>
                           <br />
                           <p className="buy">{product.buy} đã bán</p>
                         </Card.Text>
                         <div className="d-flex justify-content-between">
-                          <button className="cart-button">
+                          <button
+                            className="cart-button"
+                            onClick={() => handleAddToCart(product.productId)}
+                          >
                             <i className="bi bi-cart4"></i>
                           </button>
                           <button className="wishlist-button">
