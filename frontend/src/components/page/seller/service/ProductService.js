@@ -1,9 +1,10 @@
 
-import axios from "../../../serviceAxios/axios";
+import instance from "../../../../config/axios"
 
 const fetchAllProduct = async () => {
   try {
-    const response = await axios.get('/api/seller/products/list');
+    const response = await instance.get('/seller/products/list');
+    console.log("sản phẩm",response); // Kiểm tra cấu trúc phản hồi
     return {
       data: response.data.content, // Dữ liệu sản phẩm
       //     total: response.data.totalElements, // Tổng số sản phẩm
@@ -20,7 +21,7 @@ const fetchAllProduct = async () => {
 };
 const createProduct = async (formData) => {
   try {
-    const response = await axios.post('/api/seller/products/create', formData, {
+    const response = await instance.post('/seller/products/create', formData, {
       headers: {
         'Content-Type': 'multipart/form-data', // Thiết lập tiêu đề cho yêu cầu multipart
       },
@@ -34,7 +35,7 @@ const createProduct = async (formData) => {
 const UpdateProduct = async (productId, formData) => {
   try {
     // Đảm bảo rằng bạn có '/' trước productId trong URL
-    const response = await axios.put(`/api/seller/products/update/${productId}`, formData, {
+    const response = await instance.put(`/seller/products/update/${productId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data', // Thiết lập tiêu đề cho yêu cầu multipart
       },
@@ -47,7 +48,7 @@ const UpdateProduct = async (productId, formData) => {
 };
 const deleteProduct = async (productId) => {
   try {
-    const response = await axios.delete(`/api/seller/products/delete/${productId}`);
+    const response = await instance.delete(`/seller/products/delete/${productId}`);
     
     if (response.status === 200) {
       // Nếu API trả về status 200, bạn có thể xử lý dữ liệu ở đây nếu cần

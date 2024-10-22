@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Flex, message, Upload, Avatar } from "antd";
-import { DOMAIN } from "../constant/APIConstant";
+import { Avatar, Flex, message, Upload } from "antd";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { DOMAIN } from "../../constant/APIConstant";
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result));

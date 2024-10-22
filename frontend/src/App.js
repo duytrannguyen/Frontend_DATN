@@ -5,8 +5,8 @@ import "./App.scss";
 import "./components/css/Product.css";
 import "./components/css/ProductDetail.css";
 import "./components/css/ProductManagement.css";
-import User_Router from "./router/User_Router";
-import Seller_Router from "./router/Seller_Router";
+import User_Router from "./components/router/User_Router"
+import Seller_Router from "./components/router/Seller_Router";
 // import "./seller/css/style.css";
 import Loader from "./components/Loading";
 const App = () => {

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Button, message, Steps, theme, Form, Input, Upload, Spin } from "antd";
 import { UploadOutlined, LoadingOutlined } from "@ant-design/icons";
-import { DOMAIN } from "../constant/APIConstant";
+import { DOMAIN } from "../../constant/APIConstant"
 import My_Description from "./MyDescription";
-const My_Step = () => {
+const MyStep = () => {
   const [current, setCurrent] = useState(0);
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(false);
@@ -250,4 +250,4 @@ const My_Step = () => {
   );
 };
 
-export default My_Step;
+export default MyStep;
