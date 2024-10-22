@@ -1,0 +1,19 @@
+.trash3-button {
+    background-color: #f8f9fa; /* Màu nền nhạt */
+    border: none; /* Không viền */
+    border-radius: 8px; /* Bo góc nhẹ cho hình chữ nhật */
+    font-size: 1.5rem; /* Kích thước icon */
+    padding: 10px 20px; /* Khoảng đệm trong nút (padding) */
+    display: flex;
+    align-items: center; /* Căn giữa icon theo chiều dọc */
+    justify-content: center; /* Căn giữa icon theo chiều ngang */
+    cursor: pointer; /* Đổi con trỏ thành dạng trỏ tay */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng màu nền và màu chữ */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng nhẹ */
+  }
+  
+  .trash3-button:hover {
+    background-color: #dd1818; /* Màu nền hồng khi rê chuột */
+    color: white; /* Màu icon trắng */
+  }
+  

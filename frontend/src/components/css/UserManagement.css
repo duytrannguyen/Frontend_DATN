@@ -22,4 +22,29 @@
     background-color: white;
   }
   
+ /* Di chuyển bảng và form sang phải */
+.ml-auto {
+    margin-left: 330px; /* Tạo khoảng cách bên trái để đẩy sang phải */
+    margin-right: 0;   /* Không cần khoảng cách bên phải */
+  }
+  
+  /* Di chuyển xuống dưới */
+  .table-custom, .form-custom {
+    margin-top: 20px;  /* Tạo khoảng cách phía trên bảng */
+  }
+
+  .mb-3 {
+    margin-top: 100px;
+  }
+
+  /* Chỉnh lại button spacing */
+  .button-group button {
+    margin-right: 10px; /* Tạo khoảng cách giữa các nút */
+  }
+  
+.userProfile {
+    font-size: 13px;
+}
+  
+
   

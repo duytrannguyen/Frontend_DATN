@@ -1,0 +1,122 @@
+.product-img {
+    width: 105px;
+    height: 110px;
+  }
+  
+  .table td {
+    vertical-align: middle;
+  }
+  
+  button {
+    margin-bottom: 10px;
+  }
+  
+  .product-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px; /* Khoảng cách dưới giữa title và số lượng */
+  }
+  
+  .product-quantity {
+    font-size: 14px;
+    margin-bottom: 10px; /* Khoảng cách dưới giữa số lượng và nút */
+  }
+  
+  .product-price {
+    min-width: 120px; /* Tăng chiều rộng của cột giá */
+  }
+  
+  .price-text {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .review-btn {
+    width: 100px; /* Tăng chiều rộng của nút đánh giá */
+    height: 40px; /* Tăng chiều cao của nút đánh giá */
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .imgRw {
+    vertical-align: middle; /* Giúp hình ảnh căn giữa theo chiều dọc */
+  }
+  
+  .align-middle {
+    vertical-align: middle !important; /* Giúp nội dung khác căn giữa theo chiều dọc */
+  }
+
+  .CtS {
+    font-size: 14px;
+    color: rgb(87, 87, 85);
+  }
+
+  .review-container {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 1000px;
+  }
+  
+  .rating-section {
+    display: flex;
+    align-items: center;
+  }
+  
+  .stars {
+    color: #f0c040;
+    font-size: 70px;
+    margin-left: 10px;
+  }
+  
+  .star {
+    margin-right: 5px;
+  }
+  
+  .filled {
+    color: #f0c040;
+  }
+  
+  .rating-text {
+    color: orange;
+    margin-left: 10px;
+    font-weight: bold;
+  }
+  
+  .reward-text {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #949090;
+  }
+  
+  .reward-points {
+    color: red;
+  }
+  
+  .media-upload-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    height: 60px;
+  }
+  
+  .media-btn {
+    display: flex;
+    align-items: center;
+    width: 48%;
+  }
+  
+  .icon {
+    margin-right: 5px;
+  }
+  
+  .review-form {
+    margin-top: 10px;
+    
+  }
+  
+  .review-form .form-control {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
