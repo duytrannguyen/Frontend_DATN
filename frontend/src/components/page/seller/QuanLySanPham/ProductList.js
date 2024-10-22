@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Row,Col } from 'react-bootstrap';
+import { Table, Button, Modal, Row, Col } from 'react-bootstrap';
 import { fetchAllProduct, deleteProduct } from '../service/ProductService';
 import { PencilSquare, Trash } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
@@ -10,10 +10,6 @@ const ProductList = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [currentProduct, setCurrentProduct] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
-
-    useEffect(() => {
-        getProduct();
-    }, []);
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 10; // Số lượng sản phẩm hiển thị mỗi trang
 
@@ -29,35 +25,39 @@ const ProductList = () => {
     // Cắt danh sách sản phẩm dựa trên trang hiện tại
     const offset = currentPage * itemsPerPage;
     const currentItems = listProduct.slice(offset, offset + itemsPerPage);
+
     const getProduct = async () => {
         let res = await fetchAllProduct();
+        console.log("list sp ", res.data);
         if (res && res.data) {
             setListProduct(res.data);
         }
     };
 
+    useEffect(() => {
+        getProduct();
+    }, []);
+
     const handleDelete = (product) => {
         setCurrentProduct(product);
         setShowDeleteModal(true);
     };
+
     const navigate = useNavigate();
 
     const handleEdit = (product) => {
         setSelectedProduct(product); // Cập nhật sản phẩm được chọn
-        // Chuyển hướng đến ProductForm nếu cần
-        navigate('/seller/ProductForm', { state: { product } }); // Hoặc sử dụng URL params
-
+        navigate('/seller/ProductForm', { state: { product } }); // Điều hướng đến ProductForm
     };
-    const confirmDelete = async (product) => {
+
+    const confirmDelete = async () => {
         if (!currentProduct) return;
 
         try {
             const result = await deleteProduct(currentProduct.productId);
             if (result.success) {
                 alert('Xóa sản phẩm thành công!');
-                navigate('/seller/ProductForm', { state: { product } }); // Hoặc sử dụng URL params
-
-                getProduct();  // Cập nhật lại danh sách sản phẩm
+                getProduct();  // Cập nhật lại danh sách sản phẩm sau khi xóa
             }
             setShowDeleteModal(false);
         } catch (error) {
@@ -82,14 +82,15 @@ const ProductList = () => {
                                 <th>Số lượng</th>
                                 <th>Ngày đăng</th>
                                 <th>Trạng thái</th>
+                                <th>Hành động</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {listProduct && listProduct.length > 0 ? (
-                                listProduct.map((product, index) => (
+                            {currentItems && currentItems.length > 0 ? (
+                                currentItems.map((product, index) => (
                                     <tr key={product.product_id}>
-                                        <td>{index + 1}</td>
+                                        <td>{offset + index + 1}</td>
                                         <td>{product.productName}</td>
                                         <td>{product.categoryName}</td>
                                         <td>{product.price}</td>
@@ -104,7 +105,7 @@ const ProductList = () => {
                                                 variant="outline-primary"
                                                 size="sm"
                                                 className="me-2"
-                                                onClick={() => handleEdit(product)} // Truyền sản phẩm đã chọn
+                                                onClick={() => handleEdit(product)}
                                             >
                                                 <PencilSquare />
                                             </Button>
@@ -121,7 +122,7 @@ const ProductList = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="10">Không có sản phẩm nào</td>
+                                    <td colSpan="11">Không có sản phẩm nào</td>
                                 </tr>
                             )}
                         </tbody>
@@ -142,6 +143,7 @@ const ProductList = () => {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
                 {/* Phân trang */}
                 <Row className="justify-content-center">
                     <Col xs="auto">
@@ -149,7 +151,7 @@ const ProductList = () => {
                             previousLabel={"Trước"}
                             nextLabel={"Sau"}
                             breakLabel={"..."}
-                            pageCount={pageCount} // Thay đổi giá trị này theo số trang thực tế
+                            pageCount={pageCount}
                             marginPagesDisplayed={2}
                             pageRangeDisplayed={5}
                             onPageChange={handlePageClick}
@@ -167,7 +169,6 @@ const ProductList = () => {
                     </Col>
                 </Row>
             </Row>
-
         </>
     );
 };

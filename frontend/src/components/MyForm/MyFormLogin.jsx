@@ -1,25 +1,36 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Spin } from "antd";
+import { Spin, Alert } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 function MyFormLogin({ event, toF, toR, spin }) {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const handleSubmit = (e) => {
+  const [errorMessage, setErrorMessage] = useState(""); // Thêm trạng thái để quản lý thông báo lỗi
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    event({
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    });
+    setErrorMessage(""); // Reset thông báo lỗi khi bắt đầu gửi
+
+    try {
+      // Gọi hàm event và chờ đợi kết quả
+      await event({
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      });
+    } catch (err) {
+      // Xử lý lỗi nếu cần
+      setErrorMessage("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin."); // Cập nhật thông báo lỗi
+    }
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100" >
+    <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card shadow" style={{ width: '570px' }}>
         <div className="card-body" style={{ marginTop: '-500px' }}>
           <h2 className="card-title text-center mb-4">Đăng Nhập</h2>
+          {errorMessage && <Alert message={errorMessage} type="error" showIcon />}
           <form onSubmit={handleSubmit} className="mb-3">
             <div className="mb-3">
               <input
@@ -31,6 +42,7 @@ function MyFormLogin({ event, toF, toR, spin }) {
                 autoComplete="email"
                 placeholder="Email"
                 className="form-control"
+                aria-label="Email" // Thêm thuộc tính aria cho khả năng tiếp cận
               />
             </div>
 
@@ -44,6 +56,7 @@ function MyFormLogin({ event, toF, toR, spin }) {
                 autoComplete="current-password"
                 placeholder="Mật khẩu"
                 className="form-control"
+                aria-label="Mật khẩu" // Thêm thuộc tính aria cho khả năng tiếp cận
               />
             </div>
 
@@ -79,7 +92,7 @@ function MyFormLogin({ event, toF, toR, spin }) {
                 className="btn btn-outline-danger w-100"
               >
                 Đăng Nhập bằng Google
-              </Link >
+              </Link>
             </div>
           </form>
         </div>
@@ -89,10 +102,10 @@ function MyFormLogin({ event, toF, toR, spin }) {
 }
 
 MyFormLogin.propTypes = {
-  event: PropTypes.func,
-  toF: PropTypes.string,
-  toR: PropTypes.string,
-  spin: PropTypes.bool,
+  event: PropTypes.func.isRequired, // Đảm bảo rằng event là bắt buộc
+  toF: PropTypes.string.isRequired, // Đảm bảo rằng toF là bắt buộc
+  toR: PropTypes.string.isRequired, // Đảm bảo rằng toR là bắt buộc
+  spin: PropTypes.bool.isRequired, // Đảm bảo rằng spin là bắt buộc
 };
 
 export default MyFormLogin;

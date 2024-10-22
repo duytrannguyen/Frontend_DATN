@@ -7,12 +7,19 @@ import "./App.scss";
 import "./components/css/Product.css";
 import "./components/css/ProductDetail.css";
 import "./components/css/ProductManagement.css";
-import User_Router from "./router/User_Router";
-import Seller_Router from "./router/Seller_Router";
-import Loader from "./utils/Loading";
-import Headers from "./components/layout/user/Header";
-import Footer from "./components/layout/user/Footer";
+// <<<<<<< duy12
+import User_Router from "./components/router/User_Router"
+import Seller_Router from "./components/router/Seller_Router";
+// import "./seller/css/style.css";
+import Loader from "./components/Loading";
+// =======
+// import User_Router from "./router/User_Router";
+// import Seller_Router from "./router/Seller_Router";
+// import Loader from "./utils/Loading";
+// import Headers from "./components/layout/user/Header";
+// import Footer from "./components/layout/user/Footer";
 
+// >>>>>>> lytt1
 const App = () => {
   const [loading, setLoading] = useState(true); // Trạng thái loading
 
