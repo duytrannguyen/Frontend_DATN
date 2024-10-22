@@ -8,7 +8,9 @@ const CheckoutForm = () => {
   // Sử dụng useLocation để lấy state từ location
   const location = useLocation();
   const [images, setProductImages] = useState([]);
-
+  const [cartItems, setCartItems] = useState([]);
+  const [total, setTotalAmount] = useState(0);
+  const [shippingFee, setShippingFee] = useState(32000);
   const { selectedCartItems = [] } = location.state || {}; // Gán giá trị mặc định cho selectedCartItems
   const [invoiceData, setInvoiceData] = useState({
     usersId: 1, // ID người dùng, cần truyền vào từ thông tin người dùng hiện tại
@@ -21,6 +23,32 @@ const CheckoutForm = () => {
     feeShip: "32000",
     invoiceItems: [], // Thêm thuộc tính cho danh sách mục hóa đơn
   });
+
+  // Hàm tính tổng tiền cho selectedCartItems
+  const calculateSelectedTotalAmount = () => {
+    // Kiểm tra nếu không có sản phẩm nào được chọn
+    if (selectedCartItems.length === 0) return 0;
+
+    const total = selectedCartItems.reduce((sum, item) => {
+      const itemPrice = item.products[0].price; // Lấy giá sản phẩm
+
+      // Tính số tiền giảm giá nếu có phần trăm giảm giá
+      const discountAmount = item.products[0].percentDecrease
+        ? (itemPrice * item.products[0].percentDecrease) / 100
+        : 0; // Tránh lỗi nếu không có percentDecrease
+
+      const priceAfterDiscount = itemPrice - discountAmount; // Giá sau khi giảm
+      return sum + priceAfterDiscount * item.quantity; // Cộng dồn thành tiền cho sản phẩm
+    }, 0);
+
+    return total; // Trả về tổng tiền
+  };
+
+  // Cập nhật tổng tiền cho selectedCartItems trong useEffect
+  useEffect(() => {
+    const total = calculateSelectedTotalAmount(); // Tính toán tổng cho selectedCartItems
+    setTotalAmount(total); // Cập nhật state tổng tiền
+  }, [selectedCartItems]); // Cập nhật khi selectedCartItems thay đổi
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -302,12 +330,16 @@ const CheckoutForm = () => {
                   <p className="text-end fw-bold">Tổng tiền (gồm VAT)</p>
                 </div>
                 <div className="col-md-2">
-                  <p className="text-end"></p>
+                  <p className="text-end">{total.toLocaleString()} VNĐ</p>
                   <p className="text-end">
-                    <span id="discountAmount"></span>
+                    <span id="discountAmount">
+                      {/* {total.toLocaleString()}  */}0 VNĐ
+                    </span>
                   </p>
                   <p className="text-end">32.000 VNĐ</p>
-                  <p className="text-end text-primary fw-bold"></p>
+                  <p className="text-end text-primary fw-bold">
+                    {total.toLocaleString()} VNĐ
+                  </p>
                 </div>
                 <div className="col-md-1"></div>
               </div>

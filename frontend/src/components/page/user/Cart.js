@@ -236,10 +236,12 @@ const Cart = () => {
                             </td>
                             <td>
                               <b>
-                                {(product.price -
-                                  (product.price * product.percentDecrease) /
-                                    100) *
-                                  cartItem.quantity}{" "}
+                                {(
+                                  (product.price -
+                                    (product.price * product.percentDecrease) /
+                                      100) *
+                                  cartItem.quantity
+                                ).toLocaleString()}{" "}
                                 VNĐ
                               </b>
                             </td>
@@ -266,7 +268,7 @@ const Cart = () => {
             <div className="card">
               <div className="row">
                 <div className="col-md-9">
-                  Thành tiền: <b>{totalPrice} VNĐ</b>
+                  Thành tiền: <b>{totalPrice.toLocaleString()} VNĐ</b>
                 </div>
               </div>
               <hr />
@@ -274,7 +276,9 @@ const Cart = () => {
                 <div className="col-md-12">
                   <strong>Tổng Số Tiền (gồm VAT)</strong>
                   <b>
-                    <h4 style={{ color: "red" }}>{totalPrice} VNĐ</h4>
+                    <h4 style={{ color: "red" }}>
+                      {totalPrice.toLocaleString()} VNĐ
+                    </h4>
                   </b>
                 </div>
               </div>
