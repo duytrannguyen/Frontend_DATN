@@ -1,4 +1,6 @@
+
 .img-wrappers {
+
     width: 100%; /* Đảm bảo rằng khung hình rộng 100% màn hình */
     height: 300px; /* Chiều cao toàn bộ chiều cao của cửa sổ */
     display: flex;
@@ -7,6 +9,7 @@
     overflow: hidden; /* Đảm bảo hình không bị tràn ra ngoài khung */
   }
   
+
   .img-wrappers img {
     width: 100%;
     height: auto;
@@ -57,3 +60,70 @@
     border-color: #ff69b4;
   }
   
+  .price-filter {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .price-filter .card-header {
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.1rem;
+  }
+  
+  .price-filter .toggle-button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .form-check {
+    margin-bottom: 10px;
+  }
+  
+  .sorting-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .sorting-buttons span {
+    font-size: 16px;
+    margin-right: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sorting-buttons button {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .sorting-buttons button:hover {
+    color: aliceblue;
+    background-color: #ed3da4;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .sorting-buttons button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .title {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .title:hover {
+    text-decoration: none;
+    color: #615e5e;
+  }
+

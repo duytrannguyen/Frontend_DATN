@@ -25,13 +25,41 @@ const User_Router = () => {
               <Route path="/dashboardUser" element={<Banner />} />
               <Route path="/About_us" element={<About />} />
               <Route path="/Product" element={<Product />} />
-              <Route path="/Cart" element={<PrivateRoute allowedRoles={['USER']}><Cart/></PrivateRoute>} />
-              <Route path="/Contact" element={<PrivateRoute allowedRoles={['USER']}><Contact /></PrivateRoute>} />
-              <Route path="/Pay" element={<PrivateRoute allowedRoles={['USER']}><Pay /></PrivateRoute>} />
+              <Route
+                path="/Cart"
+                element={
+                  <PrivateRoute allowedRoles={["USER"]}>
+                    <Cart />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/Contact"
+                element={
+                  <PrivateRoute allowedRoles={["USER"]}>
+                    <Contact />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/Pay"
+                element={
+                  <PrivateRoute allowedRoles={["USER"]}>
+                    <Pay />
+                  </PrivateRoute>
+                }
+              />
               <Route path="/ProductDetail" element={<ProductDetail />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Register" element={<Register />} />
-              <Route path="/Register_Seller" element={<PrivateRoute allowedRoles={['USER']}><RegisterSeller/></PrivateRoute>} />
+              <Route
+                path="/Register_Seller"
+                element={
+                  <PrivateRoute allowedRoles={["USER"]}>
+                    <RegisterSeller />
+                  </PrivateRoute>
+                }
+              />
               <Route path="/Forgot-password" element={<ForgotPassword />} />
             </Routes>
           </Col>

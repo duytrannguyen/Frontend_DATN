@@ -5,7 +5,7 @@ function Header() {
   const logout = () => {
     // Xóa token và thông tin người dùng đã lưu trong localStorage
     localStorage.removeItem(TOKEN);
-    localStorage.removeItem('userInfo');
+    localStorage.removeItem("userInfo");
 
     // Chuyển hướng người dùng về trang đăng nhập
     window.location.href = "http://localhost:3000/Login";
@@ -17,13 +17,19 @@ function Header() {
         <div className="row justify-content-between align-items-center">
           <div className="col-sm-12 col-lg-6 d-flex justify-content-start">
             <div className="main-logo">
-              <a href="/Register_Seller" className="me-3">Trở thành người bán</a>
+              <a href="/Register_Seller" className="me-3">
+                Trở thành người bán
+              </a>
             </div>
           </div>
 
           <div className="col-sm-12 col-lg-6 d-flex justify-content-end align-items-center">
-            <a href="index.html" className="me-3">Thông báo</a>
-            <a href="index.html" className="me-3">Hỗ trợ</a>
+            <a href="index.html" className="me-3">
+              Thông báo
+            </a>
+            <a href="index.html" className="me-3">
+              Hỗ trợ
+            </a>
 
             <div className="custom-select-wrapper me-3">
               <select className="form-select">
@@ -32,9 +38,19 @@ function Header() {
               </select>
             </div>
 
-            <a href="/Login" className="me-3">Đăng nhập</a>
-            <a href="/Register" className="me-3">Đăng ký</a>
-            <li onClick={logout} className="nav-link" style={{ cursor: 'pointer' }}>Đăng xuất</li>
+            <a href="/Login" className="me-3">
+              Đăng nhập
+            </a>
+            <a href="/Register" className="me-3">
+              Đăng ký
+            </a>
+            <li
+              onClick={logout}
+              className="nav-link"
+              style={{ cursor: "pointer" }}
+            >
+              Đăng xuất
+            </li>
           </div>
         </div>
 
@@ -49,7 +65,12 @@ function Header() {
 
           <div className="col-sm-8 col-lg-7">
             <div className="search-bar border rounded-2 px-0">
-              <form id="search-form" className="d-flex align-items-center w-100 position-relative" action="" method="">
+              <form
+                id="search-form"
+                className="d-flex align-items-center w-100 position-relative"
+                action=""
+                method=""
+              >
                 <input
                   type="text"
                   className="form-control"
@@ -69,7 +90,10 @@ function Header() {
                     borderRadius: "5px",
                   }}
                 >
-                  <i className="bi bi-search" style={{ fontSize: "16px", color: "white" }}></i>
+                  <i
+                    className="bi bi-search"
+                    style={{ fontSize: "16px", color: "white" }}
+                  ></i>
                 </button>
               </form>
             </div>
@@ -83,10 +107,18 @@ function Header() {
                 </a>
               </li>
               <li>
-                <a href="index.html" className="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                <a
+                  href="index.html"
+                  className="mx-3"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasCart"
+                  aria-controls="offcanvasCart"
+                >
                   <span className="fs-4 position-relative">
                     <iconify-icon icon="mdi:cart"></iconify-icon>
-                    <span className="position-absolute translate-middle badge rounded-circle bg-danger pt-2">3</span>
+                    <span className="position-absolute translate-middle badge rounded-circle bg-danger pt-2">
+                      3
+                    </span>
                   </span>
                 </a>
               </li>
@@ -110,22 +142,34 @@ function Header() {
               <div className="col-9">
                 <ul className="navbar-nav d-flex flex-row flex-wrap list-unstyled m-0">
                   <li className="nav-item">
-                    <a href="/dashboardUser" className="nav-link">Trang chủ</a>
+                    <a href="/dashboardUser" className="nav-link">
+                      Trang chủ
+                    </a>
                   </li>
                   <li className="nav-item">
-                    <a href="/Product" className="nav-link">Cửa hàng cho cún</a>
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho cún
+                    </a>
                   </li>
                   <li className="nav-item">
-                    <a href="/Product" className="nav-link">Cửa hàng cho mèo</a>
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho mèo
+                    </a>
                   </li>
                   <li className="nav-item">
-                    <a href="/Product" className="nav-link">Cửa hàng cho chuột hamster</a>
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho chuột hamster
+                    </a>
                   </li>
                   <li className="nav-item">
-                    <a href="/Product" className="nav-link">Cửa hàng cho thỏ</a>
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho thỏ
+                    </a>
                   </li>
                   <li className="nav-item">
-                    <a href="/Product" className="nav-link">Cửa hàng cho chim vẹt</a>
+                    <a href="/Product" className="nav-link">
+                      Cửa hàng cho chim vẹt
+                    </a>
                   </li>
                 </ul>
               </div>

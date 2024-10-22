@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css"; // Nhập Bootstrap Icons
 import "../../css/style.css";
-import { Button} from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 import { TOKEN } from "../../../constant/APIConstant";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Headerss = () => {
   const navigate = useNavigate(); // Khởi tạo hook navigate
@@ -13,7 +13,7 @@ const Headerss = () => {
     localStorage.removeItem(TOKEN);
     // Chuyển hướng người dùng về trang đăng nhập
     navigate("/login");
-  }
+  };
   const [notifications] = useState([
     {
       id: 1,
@@ -70,10 +70,7 @@ const Headerss = () => {
       time: "8 hrs. ago",
       img: "assets/img/messages-3.jpg",
     },
-    
   ]);
-
-  
 
   return (
     <header id="header" className="header fixed-top d-flex align-items-center">
@@ -245,9 +242,11 @@ const Headerss = () => {
                 <hr className="dropdown-divider" />
               </li>
               <li>
-                 <li className="nav-item">
-              <Button type="primary" onClick={logout}>Đăng xuất</Button>
-            </li>
+                <li className="nav-item">
+                  <Button type="primary" onClick={logout}>
+                    Đăng xuất
+                  </Button>
+                </li>
               </li>
             </ul>
           </li>

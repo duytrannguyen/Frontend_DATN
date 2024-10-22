@@ -29,17 +29,17 @@ const Sidebar = () => {
             <span>Sản Phẩm</span>
             <i className="bi bi-chevron-down ms-auto"></i>
           </button>
-          <ul className={`nav-content collapse ${isComponentsOpen ? "show" : ""}`}>
-            {["Danh sách sản phẩm"].map(
-              (item) => (
-                <li key={item}>
-                  <Link to="/seller/ProductManagement">
-                    <i className="bi bi-circle"></i>
-                    <span>{item}</span>
-                  </Link>
-                </li>
-              )
-            )}
+          <ul
+            className={`nav-content collapse ${isComponentsOpen ? "show" : ""}`}
+          >
+            {["Danh sách sản phẩm"].map((item) => (
+              <li key={item}>
+                <Link to="/seller/ProductManagement">
+                  <i className="bi bi-circle"></i>
+                  <span>{item}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </li>
 
