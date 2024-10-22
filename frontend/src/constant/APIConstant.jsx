@@ -6,9 +6,8 @@ export const APPLICATION_JSON = "application/json";
 export const APPLICATION_FORM = "application/x-www-form-urlencoded";
 export const TOKEN = "token";
 export const RoleName = "RoleName";
-export const LOGIN = "/login";
+export const LOGIN = "/Login";
 export const REGISTER = "/register";
-
 
 export const GET_USER = "/v1/userProfile";
 

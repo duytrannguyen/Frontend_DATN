@@ -1,21 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { showToast, showErrorToast } from "../../../utils/Toast";
 
+import { payService } from "../../../services/payService"; // Import dịch vụ
 const CheckoutForm = () => {
   // Sử dụng useLocation để lấy state từ location
   const location = useLocation();
-  const { selectedCartItems = [] } = location.state || {}; // Gán giá trị mặc định cho selectedCartItems
   const [images, setProductImages] = useState([]);
 
-  // Khởi tạo thông tin người dùng với giá trị mặc định
-  const [userInfo, setUserInfo] = useState({
+  const { selectedCartItems = [] } = location.state || {}; // Gán giá trị mặc định cho selectedCartItems
+  const [invoiceData, setInvoiceData] = useState({
+    usersId: 1, // ID người dùng, cần truyền vào từ thông tin người dùng hiện tại
     fullName: "",
     email: "",
     phone: "",
     fullAddress: "",
+    paymentMethodId: "",
+    discountCodeId: "1",
+    feeShip: "32000",
+    invoiceItems: [], // Thêm thuộc tính cho danh sách mục hóa đơn
   });
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInvoiceData({ ...invoiceData, [name]: value });
+  };
+
+  const handlePayment = async (e) => {
+    e.preventDefault();
+
+    // Kiểm tra nếu có sản phẩm đã chọn để thanh toán
+    if (selectedCartItems.length === 0) {
+      showErrorToast("Không có sản phẩm nào để thanh toán.");
+      return;
+    }
+
+    // Tạo danh sách invoiceItems từ selectedCartItems
+    const invoiceItems = selectedCartItems.map((cartItem) => ({
+      product: {
+        productId: cartItem.productId, // Giả sử bạn có productId trong selectedCartItems
+      },
+      quantity: cartItem.quantity, // Số lượng sản phẩm
+      price: cartItem.price, // Giá sản phẩm
+    }));
+
+    const invoiceDataToSend = {
+      ...invoiceData,
+      invoiceItems, // Thêm danh sách mục hóa đơn vào dữ liệu hóa đơn
+    };
+
+    try {
+      const result = await payService.createInvoice(invoiceDataToSend);
+      console.log("Hóa đơn đã được tạo: ", result);
+      showToast("Đặt Hàng Thành Công!");
+    } catch (error) {
+      console.error("Thanh toán thất bại: ", error);
+      showErrorToast("Thanh toán thất bại");
+    }
+  };
   // Hàm để fetch ảnh sản phẩm khi selectedCartItems thay đổi
   const fetchImagesForSelectedItems = async () => {
     if (selectedCartItems.length > 0) {
@@ -50,7 +93,7 @@ const CheckoutForm = () => {
   }, [selectedCartItems]); // Gọi lại khi selectedCartItems thay đổi
 
   return (
-    <form>
+    <form onSubmit={handlePayment}>
       <div className="container">
         <strong>ĐỊA CHỈ GIAO HÀNG</strong>
         <hr />
@@ -63,8 +106,10 @@ const CheckoutForm = () => {
               type="text"
               className="form-control"
               id="fullName"
+              name="fullName"
               placeholder="Nhập họ và tên"
-              // defaultValue={user.fullName}
+              value={invoiceData.fullName}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -78,8 +123,10 @@ const CheckoutForm = () => {
               type="email"
               className="form-control"
               id="email"
+              name="email"
               placeholder="Nhập email"
-              // defaultValue={user.email}
+              value={invoiceData.email}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -93,14 +140,32 @@ const CheckoutForm = () => {
               type="text"
               className="form-control"
               id="phone"
+              name="phone"
               placeholder="10 ký tự số"
-              // defaultValue={user.phone}
+              value={invoiceData.phone}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+        </div>
+        <div className="row mb-3">
+          <label htmlFor="fullAddress" className="col-sm-2 col-form-label">
+            Địa chỉ
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              id="fullAddress"
+              name="fullAddress"
+              placeholder="Nhập địa chỉ"
+              value={invoiceData.fullAddress}
+              onChange={handleInputChange}
               required
             />
           </div>
         </div>
 
-        {/* <div className="card"> */}
         <strong>PHƯƠNG THỨC VẬN CHUYỂN</strong>
         <hr />
         <div className="form-check">
@@ -118,9 +183,7 @@ const CheckoutForm = () => {
             <p style={{ fontSize: "small" }}>Thứ 6 - 25/6</p>
           </label>
         </div>
-        {/* </div> */}
 
-        {/* <div className="card"> */}
         <strong>PHƯƠNG THỨC THANH TOÁN</strong>
         <hr />
         {["vnPay", "internetbanking", "cashOnDelivery"].map((method, index) => (
@@ -130,8 +193,14 @@ const CheckoutForm = () => {
               type="radio"
               name="paymentMethodId"
               id={method}
-              value={index + 1}
+              value={index + 1} // Giá trị của phương thức thanh toán
               defaultChecked={method === "cashOnDelivery"}
+              onChange={(e) =>
+                setInvoiceData({
+                  ...invoiceData,
+                  paymentMethodId: e.target.value, // Cập nhật paymentMethodId
+                })
+              }
             />
             <label className="form-check-label" htmlFor={method}>
               <i
@@ -145,22 +214,20 @@ const CheckoutForm = () => {
             </label>
           </div>
         ))}
-        {/* </div> */}
-        {/* <div className="card mt-5"> */}
+
         <div className="card-body">
           <strong>KIỂM TRA LẠI ĐƠN HÀNG</strong>
           <hr />
           <div className="col-md-12">
-            {selectedCartItems.length > 0 ? ( // Kiểm tra nếu có sản phẩm trong giỏ hàng
+            {selectedCartItems.length > 0 ? (
               selectedCartItems.map((item) => (
                 <div className="row" key={item.cartItemId}>
                   <div className="col-md-2">
-                    {item.products.length > 0 ? ( // Kiểm tra xem có sản phẩm không
+                    {item.products.length > 0 ? (
                       item.products.map((product) => {
                         const productImages = images.filter(
                           (image) => image.productId === product.productId
                         );
-                        // Lấy hình ảnh đầu tiên nếu có
                         return (
                           <div key={product.imageId}>
                             {productImages.length > 0 ? (
@@ -177,15 +244,14 @@ const CheckoutForm = () => {
                         );
                       })
                     ) : (
-                      <p>Không có hình ảnh cho sản phẩm này.</p> // Thông báo nếu không có hình ảnh
+                      <p>Không có hình ảnh cho sản phẩm này.</p>
                     )}
                   </div>
                   <div className="col-md-5">
-                    <p>{item.products[0].productName}</p>{" "}
-                    {/* Hiển thị tên sản phẩm */}
+                    <p>{item.products[0].productName}</p>
                   </div>
                   <div className="col-md-1">
-                    <p>{item.quantity}</p> {/* Hiển thị số lượng sản phẩm */}
+                    <p>{item.quantity}</p>
                   </div>
                   <div className="col-md-2">
                     <p>
@@ -217,14 +283,12 @@ const CheckoutForm = () => {
                 </div>
               ))
             ) : (
-              <p>Không có sản phẩm nào trong giỏ hàng.</p> // Hiển thị thông báo nếu không có sản phẩm
+              <p>Không có sản phẩm nào trong giỏ hàng.</p>
             )}
             <hr />
           </div>
         </div>
-        {/* </div> */}
         <div className="footer">
-          {/* <div className="card"> */}
           <div className="container">
             <div className="col-md-12">
               <div className="row">
@@ -238,34 +302,16 @@ const CheckoutForm = () => {
                   <p className="text-end fw-bold">Tổng tiền (gồm VAT)</p>
                 </div>
                 <div className="col-md-2">
+                  <p className="text-end"></p>
                   <p className="text-end">
-                    {/* <span id="itemTotal">
-                      {total && total.toLocaleString()} VNĐ
-                    </span> */}
-                  </p>
-                  {/* <input type="hidden" name="status" value={status || 1} /> */}
-                  <p className="text-end">
-                    <span id="discountAmount">
-                      {/* {discountAmount && discountAmount.toLocaleString()} VNĐ */}
-                    </span>
+                    <span id="discountAmount"></span>
                   </p>
                   <p className="text-end">32.000 VNĐ</p>
-                  <p className="text-end text-primary fw-bold">
-                    {/* <span id="totalAmount">
-                      {(
-                        (total || 0) -
-                        (discountAmount || 0) +
-                        32000
-                      ).toLocaleString()}{" "}
-                      VNĐ
-                    </span> */}
-                  </p>
+                  <p className="text-end text-primary fw-bold"></p>
                 </div>
                 <div className="col-md-1"></div>
               </div>
             </div>
-
-            {/* </div> */}
           </div>
         </div>
         <br />
