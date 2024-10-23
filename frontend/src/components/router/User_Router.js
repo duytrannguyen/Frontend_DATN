@@ -22,7 +22,7 @@ const User_Router = () => {
         <Row>
           <Col xs={12} md={12} lg={12} className="p-0">
             <Routes>
-              <Route path="/dashboardUser" element={<Banner />} />
+              <Route path="/" element={<Banner />} />
               <Route path="/About_us" element={<About />} />
               <Route path="/Product" element={<Product />} />
               <Route path="/Cart" element={<PrivateRoute allowedRoles={['USER']}><Cart/></PrivateRoute>} />

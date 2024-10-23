@@ -341,7 +341,7 @@ const Product = () => {
                           onClick={() =>
                             navigate(`/Product/${product.productId}`)
                           }
-                          src={`/images/${
+                          src={`/image_SP/${
                             productImages[product.productId][0].imageName
                           }`}
                           alt={product.productName}

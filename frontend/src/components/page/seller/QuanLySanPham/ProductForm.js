@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Button, Card } from 'react-bootstrap';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { createProduct, UpdateProduct } from '../service/ProductService';
-import { fetchAllCategories } from '../service/categoryServce';
+import { Button, Card, Col, Form, Row } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { createProduct, UpdateProduct } from '../../../../services/ProductService';
+import { fetchAllCategories } from '../../../../services/categoryServce';
 
 const ProductForm = ({ refreshProducts }) => {
     const location = useLocation(); // Khởi tạo useLocation
@@ -121,14 +121,16 @@ const ProductForm = ({ refreshProducts }) => {
             if (newProduct.productId) {
                 await UpdateProduct(newProduct.productId, formData);
                 alert("Cập nhật sản phẩm thành công!");
+                navigate("/seller/ProductManagement")
             } else {
                 await createProduct(formData);
                 alert("Thêm sản phẩm thành công!");
+                navigate("/seller/ProductManagement")
             }
             refreshProducts();
             setNewProduct({ images: [] });
             navigate('/seller/ProductManagement', { state: { product } });
-    
+
         } catch (error) {
             console.error("Lỗi:", error);
         }
@@ -136,152 +138,152 @@ const ProductForm = ({ refreshProducts }) => {
 
     return (
         <div className="container mt-4">
-        <Card>
-            <Card.Body>
-                <h2 className="text-center mb-4">{newProduct.productId ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm mới'}</h2>
+            <Card>
+                <Card.Body>
+                    <h2 className="text-center mb-4">{newProduct.productId ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm mới'}</h2>
 
-                <Form>
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formProductName">
-                            <Form.Label>Tên sản phẩm</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={newProduct.productName || ''}
-                                onChange={(e) => handleInputChange('productName', e.target.value)}
-                                placeholder="Nhập tên sản phẩm..."
-                            />
-                        </Form.Group>
-                    </Row>
+                    <Form>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formProductName">
+                                <Form.Label>Tên sản phẩm</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={newProduct.productName || ''}
+                                    onChange={(e) => handleInputChange('productName', e.target.value)}
+                                    placeholder="Nhập tên sản phẩm..."
+                                />
+                            </Form.Group>
+                        </Row>
 
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formCategory">
-                            <Form.Label>Thể loại</Form.Label>
-                            <Form.Select
-                                value={newProduct.categoryName || ''}
-                                onChange={(e) => handleInputChange('categoryName', e.target.value)}
-                            >
-                                <option value="">Chọn thể loại...</option>
-                                {listCategories.length > 0 ? (
-                                    listCategories.map((category) => (
-                                        <option key={category.categoryId} value={category.categoryName}>
-                                            {category.categoryName}
-                                        </option>
-                                    ))
-                                ) : (
-                                    <option disabled>Không có thể loại nào</option>
-                                )}
-                            </Form.Select>
-                        </Form.Group>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formCategory">
+                                <Form.Label>Thể loại</Form.Label>
+                                <Form.Select
+                                    value={newProduct.categoryName || ''}
+                                    onChange={(e) => handleInputChange('categoryName', e.target.value)}
+                                >
+                                    <option value="">Chọn thể loại...</option>
+                                    {listCategories.length > 0 ? (
+                                        listCategories.map((category) => (
+                                            <option key={category.categoryId} value={category.categoryName}>
+                                                {category.categoryName}
+                                            </option>
+                                        ))
+                                    ) : (
+                                        <option disabled>Không có thể loại nào</option>
+                                    )}
+                                </Form.Select>
+                            </Form.Group>
 
-                        <Form.Group as={Col} controlId="formPrice">
-                            <Form.Label>Giá</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={newProduct.price || ''}
-                                onChange={(e) => handleInputChange('price', e.target.value)}
-                                placeholder="Nhập giá sản phẩm..."
-                            />
-                        </Form.Group>
-                    </Row>
+                            <Form.Group as={Col} controlId="formPrice">
+                                <Form.Label>Giá</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={newProduct.price || ''}
+                                    onChange={(e) => handleInputChange('price', e.target.value)}
+                                    placeholder="Nhập giá sản phẩm..."
+                                />
+                            </Form.Group>
+                        </Row>
 
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formMaterial">
-                            <Form.Label>Chất liệu</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={newProduct.material || ''}
-                                onChange={(e) => handleInputChange('material', e.target.value)}
-                                placeholder="Nhập chất liệu..."
-                            />
-                        </Form.Group>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formMaterial">
+                                <Form.Label>Chất liệu</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={newProduct.material || ''}
+                                    onChange={(e) => handleInputChange('material', e.target.value)}
+                                    placeholder="Nhập chất liệu..."
+                                />
+                            </Form.Group>
 
-                        <Form.Group as={Col} controlId="formPlaceProduction">
-                            <Form.Label>Nơi sản xuất</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={newProduct.placeProduction || ''}
-                                onChange={(e) => handleInputChange('placeProduction', e.target.value)}
-                                placeholder="Nhập nơi sản xuất..."
-                            />
-                        </Form.Group>
-                    </Row>
+                            <Form.Group as={Col} controlId="formPlaceProduction">
+                                <Form.Label>Nơi sản xuất</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={newProduct.placeProduction || ''}
+                                    onChange={(e) => handleInputChange('placeProduction', e.target.value)}
+                                    placeholder="Nhập nơi sản xuất..."
+                                />
+                            </Form.Group>
+                        </Row>
 
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formSize">
-                            <Form.Label>Kích thước</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={newProduct.size || ''}
-                                onChange={(e) => handleInputChange('size', e.target.value)}
-                                placeholder="Nhập kích thước..."
-                            />
-                        </Form.Group>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formSize">
+                                <Form.Label>Kích thước</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={newProduct.size || ''}
+                                    onChange={(e) => handleInputChange('size', e.target.value)}
+                                    placeholder="Nhập kích thước..."
+                                />
+                            </Form.Group>
 
-                        <Form.Group as={Col} controlId="formQuantity">
-                            <Form.Label>Số lượng</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={newProduct.quantity || ''}
-                                onChange={(e) => handleInputChange('quantity', e.target.value)}
-                                placeholder="Nhập số lượng..."
-                            />
-                        </Form.Group>
+                            <Form.Group as={Col} controlId="formQuantity">
+                                <Form.Label>Số lượng</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={newProduct.quantity || ''}
+                                    onChange={(e) => handleInputChange('quantity', e.target.value)}
+                                    placeholder="Nhập số lượng..."
+                                />
+                            </Form.Group>
 
-                        <Form.Group as={Col} controlId="formPostingDate">
-                            <Form.Label>Ngày đăng</Form.Label>
-                            <Form.Control
-                                type="date"
-                                value={newProduct.postingDate || ''}
-                                onChange={(e) => handleInputChange('postingDate', e.target.value)}
-                            />
-                        </Form.Group>
-                    </Row>
+                            <Form.Group as={Col} controlId="formPostingDate">
+                                <Form.Label>Ngày đăng</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    value={newProduct.postingDate || ''}
+                                    onChange={(e) => handleInputChange('postingDate', e.target.value)}
+                                />
+                            </Form.Group>
+                        </Row>
 
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formDescription">
-                            <Form.Label>Mô tả</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows={3}
-                                value={newProduct.description || ''}
-                                onChange={(e) => handleInputChange('description', e.target.value)}
-                                placeholder="Nhập mô tả sản phẩm..."
-                            />
-                        </Form.Group>
-                    </Row>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formDescription">
+                                <Form.Label>Mô tả</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    value={newProduct.description || ''}
+                                    onChange={(e) => handleInputChange('description', e.target.value)}
+                                    placeholder="Nhập mô tả sản phẩm..."
+                                />
+                            </Form.Group>
+                        </Row>
 
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formStatusName">
-                            <Form.Label>Trạng thái</Form.Label>
-                            <Form.Select
-                                value={newProduct.statusName || ''}
-                                onChange={(e) => handleInputChange('statusName', e.target.value)}
-                            >
-                                <option value="">Chọn trạng thái...</option>
-                                <option value="On">On</option>
-                                <option value="Off">Off</option>
-                            </Form.Select>
-                        </Form.Group>
-                    </Row>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formStatusName">
+                                <Form.Label>Trạng thái</Form.Label>
+                                <Form.Select
+                                    value={newProduct.statusName || ''}
+                                    onChange={(e) => handleInputChange('statusName', e.target.value)}
+                                >
+                                    <option value="">Chọn trạng thái...</option>
+                                    <option value="On">On</option>
+                                    <option value="Off">Off</option>
+                                </Form.Select>
+                            </Form.Group>
+                        </Row>
 
-                    <Row className="mb-3">
-                        <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Label>Hình ảnh</Form.Label>
-                            <Form.Control type="file" multiple onChange={handleImageChange} />
-                            <Form.Text className="text-muted">
-                                Bạn có thể chọn nhiều hình ảnh cho sản phẩm.
-                            </Form.Text>
-                        </Form.Group>
-                    </Row>
+                        <Row className="mb-3">
+                            <Form.Group controlId="formFile" className="mb-3">
+                                <Form.Label>Hình ảnh</Form.Label>
+                                <Form.Control type="file" multiple onChange={handleImageChange} />
+                                <Form.Text className="text-muted">
+                                    Bạn có thể chọn nhiều hình ảnh cho sản phẩm.
+                                </Form.Text>
+                            </Form.Group>
+                        </Row>
 
-                    <Button variant="primary" onClick={handleSubmit}>
-                        {newProduct.productId ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'}
-                    </Button>
-                </Form>
-            </Card.Body>
-        </Card>
-    </div>
-);
+                        <Button variant="primary" onClick={handleSubmit}>
+                            {newProduct.productId ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'}
+                        </Button>
+                    </Form>
+                </Card.Body>
+            </Card>
+        </div>
+    );
 };
 
 export default ProductForm;

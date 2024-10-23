@@ -31,7 +31,7 @@ const Login = () => {
           const userRole = res.roleName; 
 
           if (userRole === "USER") {
-            navigate("/dashboardUser?token=" + res.token);
+            navigate("/?token=" + res.token);
           } else if (userRole === "SELLER") {
             navigate("/seller/dashboard?token=" + res.token);
           }  else if (userRole === "ADMIN") {

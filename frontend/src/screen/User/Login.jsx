@@ -1,10 +1,10 @@
-import MyFormLogin from '../../component/MyFormLogin';
-import { TOKEN, RoleName } from "../../constant/APIConstant";
-import { loginService } from "../../service/API";
 import { message } from "antd";
-import { useState, useEffect } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'; // Sử dụng useNavigate
+import MyFormLogin from '../../component/MyFormLogin';
+import { RoleName, TOKEN } from "../../constant/APIConstant";
+import { loginService } from "../../service/API";
 
 const Login = () => {
   const [spin, setSpin] = useState(false);
@@ -16,23 +16,21 @@ const Login = () => {
       .then((res) => {
         setSpin(false); // Kết thúc loading
 
-        // Kiểm tra nếu res là undefined hoặc không chứa token
         if (res && res.token) {
           localStorage.setItem(TOKEN, res.token);
           localStorage.setItem(RoleName, res.roleName);
           const userRole = res.roleName;
 
-          // Kiểm tra vai trò người dùng và điều hướng
           if (userRole) {
             switch (userRole) {
               case 'USER':
-                navigate("/user/dashboard"); // Điều hướng cho USER
+                navigate("/user/dashboard");
                 break;
               case 'SELLER':
-                navigate("/seller/dashboard"); // Điều hướng cho SELLER
+                navigate("/seller/dashboard");
                 break;
               case 'ADMIN':
-                navigate("/admin/dashboard"); // Điều hướng cho ADMIN
+                navigate("/admin/dashboard");
                 break;
               default:
                 message.error("Vai trò người dùng không hợp lệ");
@@ -46,7 +44,7 @@ const Login = () => {
         }
       })
       .catch((err) => {
-        setSpin(false); // Kết thúc loading
+        setSpin(false);
         if (err.response && err.response.status === 400) {
           message.error("Email hoặc mật khẩu không đúng");
         } else {
@@ -57,21 +55,21 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem(TOKEN)) {
-      localStorage.removeItem(TOKEN); // Xóa token khi component mount
+      localStorage.removeItem(TOKEN);
     }
   }, []);
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-90 ">
-      <div className="card shadow" style={{ width: '570px', height: '435px' }}>
-        <div className="card-body">
-          <MyFormLogin 
-            event={event}
-            toF="/user/Forgot-password"
-            toR="/user/Register"
-            spin={spin}
-          />
-        </div>
+    
+    <div className="container " >
+      <div className="card shadow-lg p-4" style={{ width: '400px', minHeight: '400px', borderRadius: '10px' }}>
+        <h2 className="text-center mb-4">Đăng Nhập</h2>
+        <MyFormLogin
+          event={event}
+          toF="/user/Forgot-password"
+          toR="/user/Register"
+          spin={spin}
+        />
       </div>
     </div>
   );

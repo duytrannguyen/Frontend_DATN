@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Row, Col } from 'react-bootstrap';
-import { fetchAllProduct, deleteProduct } from '../service/ProductService';
+import { Button, Col, Modal, Row, Table } from 'react-bootstrap';
 import { PencilSquare, Trash } from 'react-bootstrap-icons';
-import { useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import { useNavigate } from 'react-router-dom';
+import { TOKEN } from '../../../../constant/APIConstant';
+import instance from "../../../../service/axios";
+import { deleteProduct } from '../../../../services/ProductService';
 
 const ProductList = () => {
     const [listProduct, setListProduct] = useState([]);
@@ -12,7 +14,7 @@ const ProductList = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 10; // Số lượng sản phẩm hiển thị mỗi trang
-
+    // const token = localStorage.getItem(TOKEN);
     // Tính toán tổng số trang
     const pageCount = Math.ceil(listProduct.length / itemsPerPage);
 
@@ -25,14 +27,39 @@ const ProductList = () => {
     // Cắt danh sách sản phẩm dựa trên trang hiện tại
     const offset = currentPage * itemsPerPage;
     const currentItems = listProduct.slice(offset, offset + itemsPerPage);
-
     const getProduct = async () => {
-        let res = await fetchAllProduct();
-        console.log("list sp ", res.data);
-        if (res && res.data) {
-            setListProduct(res.data);
+        try {
+            const token = localStorage.getItem(TOKEN);
+            console.log("Token SP:", token);
+
+            // Kiểm tra token có tồn tại không
+            if (!token) {
+                console.error("Token not found");
+                return; // Không thực hiện yêu cầu nếu token không có
+            }
+
+            // Gửi yêu cầu đến API với token
+            const response = await instance.get('/api/seller/products/list', {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Thêm khoảng trắng giữa 'Bearer' và token
+                },
+            });
+
+            console.log("List sản phẩm:", response); // Kiểm tra dữ liệu trả về
+
+            if (response && response.data) {
+                setListProduct(response.data.content || []); // Sử dụng res.content nếu API trả về cấu trúc này
+            } else {
+                setListProduct([]); // Nếu không có content, thiết lập là mảng rỗng
+            }
+        } catch (error) {
+            console.error("Error in getProduct:", error);
         }
     };
+
+
+
+
 
     useEffect(() => {
         getProduct();
@@ -55,15 +82,17 @@ const ProductList = () => {
 
         try {
             const result = await deleteProduct(currentProduct.productId);
+            // console.log("xoá")
             if (result.success) {
                 alert('Xóa sản phẩm thành công!');
-                getProduct();  // Cập nhật lại danh sách sản phẩm sau khi xóa
+                window.location.reload(); // Tải lại trang hiện tại
             }
             setShowDeleteModal(false);
         } catch (error) {
             alert('Xóa sản phẩm thất bại.');
         }
     };
+
 
     return (
         <>
